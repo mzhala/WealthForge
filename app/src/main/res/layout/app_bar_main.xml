@@ -4,31 +4,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:paddingStart="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="0dp">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.WealthForge.AppBarOverlay">
+        android:theme="@style/Theme.WealthForge.AppBarOverlay"
+        android:elevation="0dp"
+        android:layout_gravity="end">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.WealthForge.PopupOverlay" />
+            app:contentInsetStart="0dp"
+            app:contentInsetLeft="0dp"
+            >
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:elevation="0dp"
+                    android:paddingStart="0dp"
+                    android:paddingLeft="0dp"
+                    android:paddingEnd="0dp"
+                    android:paddingRight="0dp"
+                    >
+
+                    <!-- Left Icon -->
+                    <ImageView
+                        android:id="@+id/icon_menu"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:contentDescription="Menu"
+                        android:src="@drawable/ic_menu_foreground" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_gravity="bottom"
+                        android:paddingEnd="5dp">
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Jackie Malinga"
+                            android:fontFamily="@font/inter"
+                            android:textStyle="bold"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="#2"
+                            android:fontFamily="@font/inter"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:layout_gravity="end"/>
+
+                    </LinearLayout>
+
+                    <!-- Profile Picture -->
+                    <ImageView
+                        android:id="@+id/icon_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/u0001_profile_picture"
+                        android:contentDescription="Profile"
+                        android:paddingTop="1dp"
+                        android:paddingBottom="1dp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:elevation="0dp"
+                    android:paddingTop="10dp">
+
+                    <!-- Title -->
+                    <TextView
+                        android:id="@+id/toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Budget"
+                        android:fontFamily="@font/inter"
+                        android:textStyle="bold"
+                        android:textSize="32sp"
+                        android:paddingTop="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
