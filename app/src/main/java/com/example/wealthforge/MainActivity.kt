@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         val iconMenu: ImageView = binding.appBarMain.toolbar.findViewById(R.id.icon_menu)
         val iconProfile: ImageView = binding.appBarMain.toolbar.findViewById(R.id.icon_profile)
 
-        titleTextView.text = "WealthForge"
+        titleTextView.text = "Welcome"
 
         iconMenu.setOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
@@ -50,14 +50,14 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow),
+            setOf(R.id.nav_home, R.id.nav_budget, R.id.nav_categories, R.id.nav_new_transaction, R.id.nav_transaction_history, R.id.nav_transaction_history, R.id.nav_profile),
             drawerLayout
         )
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
-    private fun updateToolbarTitle(title: String) {
+    fun updateToolbarTitle(title: String) {
         val titleTextView: TextView = binding.appBarMain.toolbar.findViewById(R.id.toolbar_title)
         titleTextView.text = title
     }

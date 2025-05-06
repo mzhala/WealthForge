@@ -7,19 +7,38 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.wealthforge.ui.home.HomeFragment"
+        android:name="com.example.wealthforge.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.wealthforge.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_budget"
+        android:name="com.example.wealthforge.BudgetFragment"
+        android:label="@string/menu_budget"
+        tools:layout="@layout/fragment_budget" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.wealthforge.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_categories"
+        android:name="com.example.wealthforge.CategoriesFragment"
+        android:label="@string/menu_categories"
+        tools:layout="@layout/fragment_categories" />
+
+    <fragment
+        android:id="@+id/nav_new_transaction"
+        android:name="com.example.wealthforge.NewTransactionFragment"
+        android:label="@string/menu_new_transaction"
+        tools:layout="@layout/fragment_new_transaction" />
+
+    <fragment
+        android:id="@+id/nav_transaction_history"
+        android:name="com.example.wealthforge.TransactionHistoryFragment"
+        android:label="@string/menu_transaction_history"
+        tools:layout="@layout/fragment_transaction_history" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.wealthforge.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
+
 </navigation>
