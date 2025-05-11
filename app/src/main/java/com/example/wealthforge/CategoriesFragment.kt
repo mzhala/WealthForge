@@ -34,9 +34,9 @@ class CategoriesFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
 
         val categories = listOf(
-            CategoryItem("Spotify", "27/03/2025", "R10 000.00", R.drawable.spotify),
-            CategoryItem("Grocery", "28/03/2025", "R7 500.00", R.drawable.grocery),
-            CategoryItem("Transport", "29/03/2025", "R1 200.00", R.drawable.transport)
+            CategoryItem("Spotify", "Expense", "R10 000.00", R.drawable.spotify),
+            CategoryItem("Grocery", "Expense", "R7 500.00", R.drawable.grocery),
+            CategoryItem("Transport", "Goal", "", R.drawable.transport)
         )
 
        

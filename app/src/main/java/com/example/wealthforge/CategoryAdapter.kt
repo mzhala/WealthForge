@@ -14,8 +14,8 @@ class CategoryAdapter(private val items: List<CategoryItem>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)
         val categoryName: TextView = view.findViewById(R.id.categoryName)
-        val transactionDate: TextView = view.findViewById(R.id.transactionDate)
-        val transactionAmount: TextView = view.findViewById(R.id.transactionAmount)
+        val categoryType: TextView = view.findViewById(R.id.categoryType)
+        val recurringAmount: TextView = view.findViewById(R.id.recurringAmount)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,8 +28,8 @@ class CategoryAdapter(private val items: List<CategoryItem>) :
         val item = items[position]
         holder.imageView.setImageResource(item.iconResId)
         holder.categoryName.text = item.name
-        holder.transactionDate.text = item.date
-        holder.transactionAmount.text = item.amount
+        holder.categoryType.text = item.categoryType
+        holder.recurringAmount.text = item.recurringAmount
     }
 
     override fun getItemCount(): Int = items.size

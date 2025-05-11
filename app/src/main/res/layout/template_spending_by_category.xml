@@ -9,12 +9,11 @@
     android:paddingTop="0dp"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
-    android:paddingRight="0dp"
-    android:background="@drawable/white_box">
+    android:paddingRight="0dp">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="40dp"
+        android:layout_width="25dp"
         android:layout_height="25dp"
         app:srcCompat="@drawable/spotify"/>
 
@@ -22,8 +21,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_weight="0.5
-"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"

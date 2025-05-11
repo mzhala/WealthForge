@@ -20,7 +20,7 @@ class SpendingByCategoryAdapter(private val items: List<SpendingByCategoryItem>)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.template_speding_by_category, parent, false)
+            .inflate(R.layout.template_spending_by_category, parent, false)
         return ViewHolder(view)
     }
 
