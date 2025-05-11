@@ -30,6 +30,16 @@ class HomeFragment : Fragment() {
             (activity as? MainActivity)?.updateToolbarTitle("Welcome back")
         }
 
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+
+        val transactionRecords = listOf(
+            TransactionRecordItem("Spotify", "27/03/2025 description description description description description", "R10 000.00", R.drawable.spotify),
+            TransactionRecordItem("Grocery", "28/03/2025 Study Snacks", "R7 500.00", R.drawable.grocery),
+            TransactionRecordItem("Transport", "29/03/2025", "R1 200.00", R.drawable.transport)
+        )
+
+        recyclerView.layoutManager = LinearLayoutManager(context) // Set the layout manager
+        recyclerView.adapter = TransactionRecordAdapter(transactionRecords) // Set the adapter to bind data
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
