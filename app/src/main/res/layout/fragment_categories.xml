@@ -10,11 +10,210 @@
     android:paddingRight="0dp"
     tools:context=".CategoriesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- New Category Card-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="230dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/black_card"
+        android:orientation="vertical">
+
+        <!-- New Category Card Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/black_card_header">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:text="New Category"
+                android:textColor="#FFFFFF"
+                style="@style/CardTitleStyle" />
+
+        </LinearLayout>
+
+        <!-- Category Name -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category Name"
+                style="@style/CardLabelStyle"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/categoryName"
+                android:layout_width="184dp"
+                android:layout_height="match_parent"
+                android:paddingEnd="16dp"
+                android:paddingStart="5dp"
+                android:hint=""
+                style="@style/Money"
+                android:background="@drawable/linear_layout_border"/>
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- Category Type -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type"
+                style="@style/CardLabelStyle"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Spinner
+                android:id="@+id/categoryTypeSpinner"
+                android:layout_width="184dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/spinner_background"
+                android:paddingEnd="16dp"
+                style="@style/LabelStyle" />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- Category Recurring -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recurring"
+                style="@style/CardLabelStyle"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <CheckBox
+                android:id="@+id/agreeCheckbox"
+                android:layout_width="184dp"
+                android:layout_height="wrap_content"
+                style="@style/CustomCheckBox" />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- Category Limit Amount -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Limit Amount"
+                style="@style/CardLabelStyle" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="184dp"
+                android:layout_height="match_parent"
+                android:padding="1dp"
+                android:background="@drawable/linear_layout_border">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="R"
+                    style="@style/LabelStyle" />
+
+                <EditText
+                    android:id="@+id/limitAmountInput"
+                    style="@style/Money"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"
+                    android:hint="0"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Add Category to budget -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/addCategoryButton"
+            style="@style/MyButtonStyle"
+            android:layout_width="184dp"
+            android:layout_height="match_parent"
+            android:text="Add Category" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
 
 </LinearLayout>
