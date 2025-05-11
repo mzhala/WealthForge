@@ -30,6 +30,45 @@ class TransactionHistoryFragment : Fragment() {
         // Update toolbar title
         (activity as? MainActivity)?.updateToolbarTitle("Transaction History")
 
+        // month and year spinner
+        val startMonthSpinner: Spinner = view.findViewById(R.id.startMonthSpinner)
+        val startYearSpinner: Spinner = view.findViewById(R.id.startYearSpinner)
+
+        val endMonthSpinner: Spinner = view.findViewById(R.id.endMonthSpinner)
+        val endYearSpinner: Spinner = view.findViewById(R.id.endYearSpinner)
+
+        val months = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+        val current = Calendar.getInstance()
+        val currentMonth = current.get(Calendar.MONTH)
+        val currentYear = current.get(Calendar.YEAR)
+
+        val years = (currentYear..(currentYear + 5)).map { it.toString() }
+
+        startMonthSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, months)
+        startYearSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, years)
+
+        endMonthSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, months)
+        endYearSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, years)
+
+        startMonthSpinner.setSelection(0)
+        startYearSpinner.setSelection(0)
+
+        endMonthSpinner.setSelection(currentMonth)
+        endYearSpinner.setSelection(0)
+
+        // recycler history
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+
+        val transactionRecords = listOf(
+            TransactionRecordItem("Spotify", "27/03/2025", "R10 000.00", R.drawable.spotify),
+            TransactionRecordItem("Grocery", "28/03/2025", "R7 500.00", R.drawable.grocery),
+            TransactionRecordItem("Transport", "29/03/2025", "R1 200.00", R.drawable.transport)
+        )
+
+        recyclerView.layoutManager = LinearLayoutManager(context) // Set the layout manager
+        recyclerView.adapter = TransactionRecordAdapter(transactionRecords) // Set the adapter to bind data
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

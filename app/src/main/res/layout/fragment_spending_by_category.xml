@@ -1,14 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="0dp"
+    android:paddingTop="0dp"
+    android:paddingRight="0dp"
     tools:context=".SpendingByCategoryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <!-- StartDate (Month, Year) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Date"
+            style="@style/LabelStyle"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/startMonthSpinner"
+            android:layout_width="86dp"
+            android:layout_height="match_parent"
+            android:paddingEnd="16dp"
+            style="@style/LabelStyle"/>
+
+        <Space
+            android:layout_width="12dp"
+            android:layout_height="match_parent" />
+
+        <Spinner
+            android:id="@+id/startYearSpinner"
+            android:layout_width="86dp"
+            android:layout_height="match_parent"
+            android:paddingEnd="16dp"
+            style="@style/LabelStyle" />
+    </LinearLayout>
+
+    <!-- EndDate (Month, Year) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Date"
+            style="@style/LabelStyle"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/endMonthSpinner"
+            android:layout_width="86dp"
+            android:layout_height="match_parent"
+            android:paddingEnd="16dp"
+            style="@style/LabelStyle"/>
+
+        <Space
+            android:layout_width="12dp"
+            android:layout_height="match_parent" />
+
+        <Spinner
+            android:id="@+id/endYearSpinner"
+            android:layout_width="86dp"
+            android:layout_height="match_parent"
+            android:paddingEnd="16dp"
+            style="@style/LabelStyle" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
+
+</LinearLayout>
