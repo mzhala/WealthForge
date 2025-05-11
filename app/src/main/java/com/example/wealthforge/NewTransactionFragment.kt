@@ -32,6 +32,42 @@ class NewTransactionFragment : Fragment() {
         // Update toolbar title
         (activity as? MainActivity)?.updateToolbarTitle("New Transaction")
 
+        // category name spinner
+        val categorySpinner: Spinner = view.findViewById(R.id.categorySpinner)
+        val categories = listOf("Rent", "Groceries", "Transport", "Entertainment")
+        categorySpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, categories)
+        categorySpinner.setSelection(0)
+
+        // month and year spinner
+        val monthSpinner: Spinner = view.findViewById(R.id.monthSpinner)
+        val yearSpinner: Spinner = view.findViewById(R.id.yearSpinner)
+
+        val months = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+        val current = Calendar.getInstance()
+        val currentMonth = current.get(Calendar.MONTH)
+        val currentYear = current.get(Calendar.YEAR)
+
+        val years = (currentYear..(currentYear + 5)).map { it.toString() }
+
+        monthSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, months)
+        yearSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, years)
+
+        monthSpinner.setSelection(currentMonth)
+        yearSpinner.setSelection(0)
+
+        // recycler view - recent transactions
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+
+        val transactionRecords = listOf(
+            TransactionRecordItem("Spotify", "27/03/2025", "R10 000.00", R.drawable.spotify),
+            TransactionRecordItem("Grocery", "28/03/2025", "R7 500.00", R.drawable.grocery),
+            TransactionRecordItem("Transport", "29/03/2025", "R1 200.00", R.drawable.transport)
+        )
+
+        recyclerView.layoutManager = LinearLayoutManager(context) // Set the layout manager
+        recyclerView.adapter = TransactionRecordAdapter(transactionRecords) // Set the adapter to bind data
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
