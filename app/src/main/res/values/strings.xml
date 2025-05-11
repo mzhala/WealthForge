@@ -12,6 +12,7 @@
     <string name="menu_categories">Categories</string>
     <string name="menu_new_transaction">New Transaction</string>
     <string name="menu_transaction_history">Transaction History</string>
+    <string name="menu_spending_by_category">Spending by Category</string>
     <string name="menu_profile">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -21,9 +21,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:text="Month"
-            android:textSize="16sp" />
+            style="@style/LabelStyle"/>
 
         <View
             android:layout_width="0dp"
@@ -35,7 +34,7 @@
             android:layout_width="86dp"
             android:layout_height="match_parent"
             android:paddingEnd="16dp"
-            android:textSize="16sp" />
+            style="@style/LabelStyle"/>
 
         <Space
             android:layout_width="12dp"
@@ -46,7 +45,7 @@
             android:layout_width="86dp"
             android:layout_height="match_parent"
             android:paddingEnd="16dp"
-            android:textSize="16sp" />
+            style="@style/LabelStyle" />
     </LinearLayout>
 
     <!-- Budget Amount for Selected (Month, Year)-->
@@ -60,10 +59,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:gravity="center_vertical"
             android:text="Budget Amount"
-            android:textSize="16sp" />
+            style="@style/LabelStyle"/>
 
         <View
             android:layout_width="0dp"
@@ -73,6 +71,7 @@
         <LinearLayout
             android:layout_width="184dp"
             android:layout_height="match_parent"
+            android:padding="1dp"
             android:background="@drawable/linear_layout_border">
 
             <TextView
@@ -81,13 +80,18 @@
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
+                style="@style/LabelStyle"
                 android:text="R" />
 
-            <NumberPicker
-                android:id="@+id/budgetAmount"
-                android:layout_width="23dp"
+            <EditText
+                android:id="@+id/budgetAmountInput"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical" />
+                android:hint="0"
+                android:inputType="number"
+                style="@style/Money"
+                android:background="@android:color/white" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -131,10 +135,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:paddingStart="10dp"
                 android:text="Category Budget"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                style="@style/CardTitleStyle" />
 
         </LinearLayout>
 
@@ -149,11 +151,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:paddingStart="10dp"
                 android:text="Category Name"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                style="@style/CardLabelStyle" />
 
             <View
                 android:layout_width="0dp"
@@ -166,7 +165,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/spinner_background"
                 android:paddingEnd="16dp"
-                android:textSize="16sp" />
+                style="@style/LabelStyle"/>
 
             <Space
                 android:layout_width="12dp"
@@ -185,11 +184,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:paddingStart="10dp"
                 android:text="Limit Amount"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                style="@style/CardLabelStyle" />
 
             <View
                 android:layout_width="0dp"
@@ -199,6 +195,7 @@
             <LinearLayout
                 android:layout_width="184dp"
                 android:layout_height="match_parent"
+                android:padding="1dp"
                 android:background="@drawable/linear_layout_border">
 
                 <TextView
@@ -207,13 +204,17 @@
                     android:gravity="center_vertical"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:text="R" />
+                    android:text="R"
+                    style="@style/LabelStyle" />
 
-                <NumberPicker
-                    android:id="@+id/limitAmount"
-                    android:layout_width="23dp"
+                <EditText
+                    android:id="@+id/limitAmountInput"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical" />
+                    android:hint="0"
+                    android:inputType="number"
+                    android:background="@android:color/white"
+                    style="@style/Money" />
             </LinearLayout>
 
             <Space
@@ -245,47 +246,13 @@
     </LinearLayout>
 
     <!-- Categories on budget -->
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/linear_layout_border"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/spotify" />
-
-        <TextView
-            android:layout_width="184dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="Spotify"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="R170.00"
-            android:textSize="16sp"
-            android:layout_weight="1"/>
-
-        <ImageButton
-            android:id="@+id/deleteButton"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/delete"
-            android:scaleType="centerInside"
-            android:src="@drawable/delete_icon_foreground" />
-
-    </LinearLayout>
+        android:padding="10dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
 </LinearLayout>

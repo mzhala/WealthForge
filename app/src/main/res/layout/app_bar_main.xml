@@ -47,7 +47,7 @@
                     <ImageView
                         android:id="@+id/icon_menu"
                         android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:contentDescription="Menu"
                         android:src="@drawable/ic_menu_foreground" />
 
@@ -83,7 +83,8 @@
                             android:fontFamily="@font/inter"
                             android:textStyle="bold"
                             android:textSize="12sp"
-                            android:layout_gravity="end"/>
+                            android:layout_gravity="end"
+                            android:id="@+id/position"/>
 
                     </LinearLayout>
 

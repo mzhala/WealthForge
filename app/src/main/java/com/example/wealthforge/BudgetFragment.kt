@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter
 import android.widget.NumberPicker
 import android.widget.Spinner
 import java.util.*
+import android.widget.EditText
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 // Optional: use constants if passing parameters
 private const val ARG_PARAM1 = "param1"
@@ -43,7 +46,11 @@ class BudgetFragment : Fragment() {
         val monthSpinner: Spinner = view.findViewById(R.id.monthSpinner)
         val yearSpinner: Spinner = view.findViewById(R.id.yearSpinner)
         val categorySpinner: Spinner = view.findViewById(R.id.categorySpinner)
-        val numberPicker: NumberPicker = view.findViewById(R.id.budgetAmount)
+        val budgetAmountInput: EditText = view.findViewById(R.id.budgetAmountInput)
+        val enteredValue_budgetAmountInput = budgetAmountInput.text.toString().toIntOrNull()
+        val limitAmountInput: EditText = view.findViewById(R.id.limitAmountInput)
+        val enteredValue_limitAmountInput = budgetAmountInput.text.toString().toIntOrNull()
+
 
         val months = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
@@ -60,13 +67,31 @@ class BudgetFragment : Fragment() {
         monthSpinner.setSelection(currentMonth)
         yearSpinner.setSelection(0)
 
-        numberPicker.minValue = 0
-        numberPicker.value = 1000
-        numberPicker.wrapSelectorWheel = false
-
         val categories = listOf("Rent", "Groceries", "Transport", "Entertainment")
         categorySpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, categories)
         categorySpinner.setSelection(0)
+
+        // recycle view displaying categories added on budget
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+
+        val budgetCategories = listOf(
+            CategoryBudgetItem("Spotify", "R500", R.drawable.spotify),
+            CategoryBudgetItem("Grocery", "R850", R.drawable.grocery),
+            CategoryBudgetItem("Transport", "R8400",  R.drawable.transport),
+            CategoryBudgetItem("Spotify", "R500", R.drawable.spotify),
+            CategoryBudgetItem("Grocery", "R850", R.drawable.grocery),
+            CategoryBudgetItem("Transport", "R8400",  R.drawable.transport),
+            CategoryBudgetItem("Spotify", "R500", R.drawable.spotify),
+            CategoryBudgetItem("Grocery", "R850", R.drawable.grocery),
+            CategoryBudgetItem("Transport", "R8400",  R.drawable.transport),
+            CategoryBudgetItem("Spotify", "R500", R.drawable.spotify),
+            CategoryBudgetItem("Grocery", "R850", R.drawable.grocery),
+            CategoryBudgetItem("Transport", "R8400",  R.drawable.transport)
+        )
+
+        recyclerView.layoutManager = LinearLayoutManager(context) // Set the layout manager
+        recyclerView.adapter = CategoryBudgetAdapter(budgetCategories) // Set the adapter to bind data
+
     }
 
     companion object {
