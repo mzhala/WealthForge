@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wealthforge.R
 
-class CategoryAdapter(private val items: List<CategoryItem>) :
+class CategoryAdapter(private val items: MutableList<CategoryItem>, private val onDelete: (CategoryItem) -> Unit) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -16,6 +16,7 @@ class CategoryAdapter(private val items: List<CategoryItem>) :
         val categoryName: TextView = view.findViewById(R.id.categoryName)
         val categoryType: TextView = view.findViewById(R.id.categoryType)
         val recurringAmount: TextView = view.findViewById(R.id.recurringAmount)
+        val deleteButton: ImageView = view.findViewById(R.id.deleteButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,7 +31,20 @@ class CategoryAdapter(private val items: List<CategoryItem>) :
         holder.categoryName.text = item.name
         holder.categoryType.text = item.categoryType
         holder.recurringAmount.text = item.recurringAmount
+
+        // Handle delete button click
+        holder.deleteButton.setOnClickListener {
+            onDelete(item)  // Invoke the delete action provided by the fragment
+            // Optionally remove the item from the list and notify the adapter
+            val index = items.indexOf(item)
+            if (index != -1) {
+                items.removeAt(index)
+                notifyItemRemoved(index)
+            }
+
+        }
     }
 
     override fun getItemCount(): Int = items.size
 }
+

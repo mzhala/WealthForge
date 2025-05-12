@@ -13,7 +13,7 @@
     <!-- New Category Card-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="275dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/black_card"
         android:orientation="vertical">
@@ -184,10 +184,31 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+        <!--icon upload -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:gravity="top"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/uploadImageButton"
+                style="@style/CardButtonStyle"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:text="Upload Icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=""
+                android:layout_marginStart="5dp"
+                style="@style/CardLabelStyle"
+                android:id="@+id/uploadImageButton_status"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Add Category to budget -->
@@ -210,6 +231,12 @@
             android:text="Add Category" />
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/debugging"
+        android:text="debugging"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

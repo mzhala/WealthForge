@@ -73,7 +73,8 @@
                             android:text="Jackie Malinga"
                             android:fontFamily="@font/inter"
                             android:textStyle="bold"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp"
+                            android:id="@+id/username"/>
 
                         <TextView
                             android:layout_width="wrap_content"
