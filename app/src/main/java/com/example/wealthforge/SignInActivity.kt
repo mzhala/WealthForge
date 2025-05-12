@@ -30,9 +30,9 @@ class SignInActivity : AppCompatActivity() {
 
         // Initial/default user tester pass
         val newUser = User(
-            username = "tester",
+            username = "Thandi",
             password = "pass",
-            name = "John",
+            name = "Thandi",
             surname = "Doe",
             profilePicture = null
         )
@@ -96,9 +96,10 @@ class SignInActivity : AppCompatActivity() {
             Category(0, userId, "Emergency Fund", "Goal", false, 0.0, R.drawable.ic_emergency_stop),
         )
         defaultCategories.forEach { category ->
-            if (categoryDao.categoryExists(category.categoryName) == 0) {
+            if (categoryDao.categoryExistsForUser(userId, category.categoryName) == 0) {
                 categoryDao.insertCategory(category)
             }
+
 
 
         }

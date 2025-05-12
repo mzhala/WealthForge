@@ -1,13 +1,32 @@
-package com.example.wealthforge
+package com.example.wealthforge.data
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.room.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@Entity(
+    tableName = "budget",
+    foreignKeys = [
+        ForeignKey(
+            entity = User::class,
+            parentColumns = ["id"],
+            childColumns = ["user_id"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [Index(value = ["user_id", "month", "year"], unique = true)]  // Ensure unique month-year combination
+)
+data class Budget(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
 
+    @ColumnInfo(name = "user_id")
+    val userId: Int,
+
+    @ColumnInfo(name = "month")
+    val month: String,  // 1 = January, 2 = February, etc.
+
+    @ColumnInfo(name = "year")
+    val year: Int,
+
+    @ColumnInfo(name = "amount")
+    val amount: Int
+)

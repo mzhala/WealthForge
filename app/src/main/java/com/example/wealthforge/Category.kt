@@ -12,7 +12,7 @@ import androidx.room.*
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index(value = ["user_id"]), Index(value = ["category_name"], unique = true)]
+    indices = [Index(value = ["user_id", "category_name"], unique = true)]
 )
 data class Category(
     @PrimaryKey(autoGenerate = true)

@@ -23,13 +23,13 @@ import androidx.fragment.app.activityViewModels
 import com.example.wealthforge.data.Category
 import com.example.wealthforge.data.AppDatabase
 import com.example.wealthforge.data.CategoryDao
+import com.example.wealthforge.data.User
 import com.example.wealthforge.data.UserDao
 
 class CategoriesFragment : Fragment() {
 
     private lateinit var db: AppDatabase
     private val userViewModel: UserViewModel by activityViewModels() // Access UserViewModel shared across activity
-    //private lateinit var usernameTextView: TextView
     private lateinit var userDao: UserDao
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,22 +58,6 @@ class CategoriesFragment : Fragment() {
         )
         categorySpinner.setSelection(0)
 
-        val debugging = view.findViewById<TextView>(R.id.debugging)
-        debugging.text = userId.toString()
-        // Retrieve the username in a coroutine
-       /* if (userId != null) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                try {
-                    val username = db.userDao().getUsername(userId)
-                    usernameTextView.text = username
-                } catch (e: Exception) {
-                    Toast.makeText(requireContext(), "Error fetching username", Toast.LENGTH_SHORT).show()
-                }
-            }
-        } else {
-            Toast.makeText(requireContext(), "User ID is null", Toast.LENGTH_SHORT).show()
-        }*/
-
         val addCategoryButton = view.findViewById<Button>(R.id.addCategoryButton)
 
         addCategoryButton.setOnClickListener {
@@ -84,29 +68,41 @@ class CategoriesFragment : Fragment() {
             val limitAmount = limitAmountText.toDoubleOrNull() ?: 0.0
             val iconResId = R.drawable.ic_categories // set default or use the uploaded one
 
+
             // Get userId from ViewModel
             val userId = userViewModel.userId.value?.toIntOrNull()
 
-            if (name.isNotBlank() && userId != null) {
-                val category = Category(
-                    userId = userId,
-                    categoryName = name,
-                    type = type,
-                    recurring = isRecurring,
-                    amount = limitAmount,
-                    iconResId = iconResId
-                )
-
-                // insert into DB on background thread
+            if (userId != null) {
                 lifecycleScope.launch {
-                    db.categoryDao().insertCategory(category)
-                    Toast.makeText(requireContext(), "Category Added", Toast.LENGTH_SHORT).show()
+                    try {
+                        // Check if the user exists in the User table
+                        val userExists = db.userDao().getUsername(userId) != null
+
+                        if (!userExists) {
+                            Toast.makeText(requireContext(), "User does not exist", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Proceed with inserting the category if user exists
+                            val category = Category(
+                                userId = userId,
+                                categoryName = name,
+                                type = type,
+                                recurring = isRecurring,
+                                amount = if (!isRecurring) 0.0 else limitAmount,  // Set amount to 0 if recurring is false,
+                                iconResId = iconResId
+                            )
+
+                            db.categoryDao().insertCategory(category)
+                            Toast.makeText(requireContext(), "Category Added", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } else {
-                Toast.makeText(requireContext(), "Please enter category name and valid user ID", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(requireContext(), "Invalid user ID", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         // recycler view for displaying category budgets
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
@@ -116,7 +112,8 @@ class CategoriesFragment : Fragment() {
             val userId = userViewModel.userId.value?.toIntOrNull()
 
             if (userId != null) {
-                val savedCategories = db.categoryDao().getCategoriesByUser(userId)
+                //val savedCategories = db.categoryDao().getCategoriesByUser(userId)
+                val savedCategories = db.categoryDao().getCategories()
                 val categoryItems = savedCategories.map {
                     CategoryItem(
                         id = it.id,

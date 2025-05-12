@@ -111,7 +111,7 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/settBudgetAmountButton"
+            android:id="@+id/setBudgetAmountButton"
             style="@style/MyButtonStyle"
             android:layout_width="184dp"
             android:layout_height="match_parent"

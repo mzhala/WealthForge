@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [User::class, Category::class], version = 2)
+@Database(entities = [User::class, Category::class, Budget::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun categoryDao(): CategoryDao
+    abstract fun budgetDao(): BudgetDao
 
     companion object {
         @Volatile
@@ -20,8 +22,17 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "welthforge-db"
-                ).fallbackToDestructiveMigration().build()
+                    "wealthforge-db" // Make sure this matches your actual database name
+                )
+                    .addCallback(object : RoomDatabase.Callback() {
+                        override fun onOpen(db: SupportSQLiteDatabase) {
+                            super.onOpen(db)
+                            // Enable foreign key constraints
+                            db.execSQL("PRAGMA foreign_keys=ON;")
+                        }
+                    })
+                    .fallbackToDestructiveMigration() // Handles migration if the schema changes
+                    .build()
                 INSTANCE = instance
                 instance
             }

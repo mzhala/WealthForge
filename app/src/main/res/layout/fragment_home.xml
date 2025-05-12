@@ -20,7 +20,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:text="Budget"
             style="@style/CardLabelStyle"
             android:textAlignment="center"
@@ -56,7 +56,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:text="Expenses"
                 style="@style/LabelStyle"
                 android:textAlignment="center"
@@ -87,7 +87,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:text="Goals"
                 style="@style/LabelStyle"
                 android:textAlignment="center"
@@ -129,7 +129,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:padding="10dp"
         android:clipToPadding="false"
         android:scrollbars="vertical" />

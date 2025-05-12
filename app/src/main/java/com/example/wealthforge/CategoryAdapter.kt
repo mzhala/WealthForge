@@ -46,5 +46,7 @@ class CategoryAdapter(private val items: MutableList<CategoryItem>, private val 
     }
 
     override fun getItemCount(): Int = items.size
+
+
 }
 
