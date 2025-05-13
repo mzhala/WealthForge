@@ -210,7 +210,7 @@
                     style="@style/LabelStyle" />
 
                 <EditText
-                    android:id="@+id/limitAmountInput"
+                    android:id="@+id/categoryBudgetAmount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="0"

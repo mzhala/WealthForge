@@ -23,15 +23,21 @@ import com.example.wealthforge.data.AppDatabase
 import com.example.wealthforge.data.Budget
 import com.example.wealthforge.data.BudgetDao
 import com.example.wealthforge.data.Category
+import com.example.wealthforge.data.CategoryBudget
+import com.example.wealthforge.data.CategoryBudgetDao
+import com.example.wealthforge.data.CategoryDao
 import com.example.wealthforge.data.UserDao
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class BudgetFragment : Fragment() {
 
     private lateinit var db: AppDatabase
     private val userViewModel: UserViewModel by activityViewModels() // Access UserViewModel shared across activity
     private lateinit var budgetDao: BudgetDao
-
+    private lateinit var categoryDao: CategoryDao
+    private lateinit var categoryBudgetDao: CategoryBudgetDao
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,9 +64,7 @@ class BudgetFragment : Fragment() {
         val yearSpinner: Spinner = view.findViewById(R.id.yearSpinner)
         val categorySpinner: Spinner = view.findViewById(R.id.categorySpinner)
         val budgetAmountInput: EditText = view.findViewById(R.id.budgetAmountInput)
-        val enteredValue_budgetAmountInput = budgetAmountInput.text.toString().toIntOrNull()
-        val limitAmountInput: EditText = view.findViewById(R.id.limitAmountInput)
-        val enteredValue_limitAmountInput = budgetAmountInput.text.toString().toIntOrNull()
+
 
         val months = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
@@ -109,8 +113,10 @@ class BudgetFragment : Fragment() {
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-        val setBudgetAmountButton = view.findViewById<Button>(R.id.setBudgetAmountButton)
+
         // set budget amount button
+        val setBudgetAmountButton = view.findViewById<Button>(R.id.setBudgetAmountButton)
+
         setBudgetAmountButton.setOnClickListener {
             val context = requireContext()
             val budgetAmount = view.findViewById<EditText>(R.id.budgetAmountInput).text.toString().toIntOrNull() ?: 0
@@ -151,13 +157,79 @@ class BudgetFragment : Fragment() {
             }
         }
 
+        // populate the category name spinner
+        if (userId != null) {
+            lifecycleScope.launch {
+                val categories = db.categoryDao()
+                    .getAllCategoryNamesByUser(userId)  // or via ViewModel if you're using one
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_spinner_dropdown_item,
+                    categories
+                )
+                categorySpinner.adapter = adapter
+                categorySpinner.setSelection(0)  // Optional: default to first item
+            }
+        }
 
+        // add category to  budget button
+        val addCategoryToBudgetButton = view.findViewById<Button>(R.id.addCategoryToBudgetButton)
 
+        addCategoryToBudgetButton.setOnClickListener {
+            val context = requireContext()
+            val amount = view.findViewById<EditText>(R.id.categoryBudgetAmount).text.toString().toIntOrNull() ?: 0
+            val category_name = view.findViewById<Spinner>(R.id.categorySpinner).selectedItem.toString()
+            val month = view.findViewById<Spinner>(R.id.monthSpinner).selectedItem.toString()
+            val year = view.findViewById<Spinner>(R.id.yearSpinner).selectedItem.toString().toIntOrNull() ?: 0
+            val userId = userViewModel.userId.value?.toIntOrNull()
 
+            if (userId == null) {
+                Toast.makeText(context, "Invalid user ID", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-        val categories = listOf("Rent", "Groceries", "Transport", "Entertainment")
-        categorySpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, categories)
-        categorySpinner.setSelection(0)
+            if (amount <= 0) {
+                Toast.makeText(context, "Enter Category Budget Amount", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            lifecycleScope.launch {
+                try {
+                    val userExists = db.userDao().getUsername(userId) != null
+                    if (!userExists) {
+                        Toast.makeText(context, "User does not exist", Toast.LENGTH_SHORT).show()
+                        return@launch
+                    }
+
+                    val categoryBudget = CategoryBudget(
+                        userId = userId,
+                        category_name = category_name,
+                        year = year,
+                        month = month,
+                        amount = amount
+                    )
+
+                    lifecycleScope.launch {
+                        val exists = db.categoryBudgetDao().checkCategoryBudgetExists(userId, category_name, year, month)
+
+                        if (exists == 0) {
+                            db.categoryBudgetDao().insertCategoryBudget(categoryBudget)
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(context, "Category Budget Amount Added", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            db.categoryBudgetDao().updateCategoryBudget(categoryBudget)
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(context, "Category Budget Amount Updated", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+
+                } catch (e: Exception) {
+                    Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
         // recycle view displaying categories added on budget
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)

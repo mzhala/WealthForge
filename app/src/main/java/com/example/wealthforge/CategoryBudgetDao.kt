@@ -13,9 +13,9 @@ interface CategoryBudgetDao {
     @Update
     suspend fun updateCategoryBudget(categoryBudget: CategoryBudget)
 
-    @Query("SELECT * FROM categoryBudget WHERE category_id = :categoryId AND year = :year AND month = :month LIMIT 1")
-    suspend fun getCategoryBudget(categoryId: Int, year: Int, month: String): CategoryBudget?
+    @Query("SELECT * FROM categoryBudget WHERE user_id= :user_id AND category_name = :category_name AND year = :year AND month = :month LIMIT 1")
+    suspend fun getCategoryBudget(user_id: Int,category_name: String, year: Int, month: String): CategoryBudget?
 
-    @Query("SELECT COUNT(*) FROM categoryBudget WHERE category_id = :categoryId AND year = :year AND month = :month")
-    suspend fun checkCategoryBudgetExists(categoryId: Int, year: Int, month: String): Int
+    @Query("SELECT COUNT(*) FROM categoryBudget WHERE user_id= :user_id AND category_name = :category_name AND year = :year AND month = :month")
+    suspend fun checkCategoryBudgetExists(user_id: Int, category_name: String, year: Int, month: String): Int
 }

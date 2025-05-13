@@ -35,4 +35,8 @@ interface CategoryDao {
     @Query("SELECT COUNT(*) FROM categories")
     suspend fun categoryCount(): Int
 
+    @Query("SELECT category_name FROM categories WHERE user_id = :user_id")
+    suspend fun getAllCategoryNamesByUser(user_id: Int): List<String>
+
+
 }
