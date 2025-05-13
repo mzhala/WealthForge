@@ -38,5 +38,7 @@ interface CategoryDao {
     @Query("SELECT category_name FROM categories WHERE user_id = :user_id")
     suspend fun getAllCategoryNamesByUser(user_id: Int): List<String>
 
+    @Query("SELECT iconResId FROM categories WHERE user_id = :user_id AND category_name = :category_name")
+    suspend fun getCategoryIcon(user_id: Int, category_name: String): Int
 
 }

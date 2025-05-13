@@ -33,9 +33,10 @@ class HomeFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
 
         val transactionRecords = listOf(
-            TransactionRecordItem("Spotify", "27/03/2025 description description description description description", "R10 000.00", R.drawable.spotify),
-            TransactionRecordItem("Grocery", "28/03/2025 Study Snacks", "R7 500.00", R.drawable.grocery),
-            TransactionRecordItem("Transport", "29/03/2025", "R1 200.00", R.drawable.transport)
+            TransactionRecordItem("Groceries", "29/05/2025 study snack", "R100", R.drawable.ic_groceries),
+            TransactionRecordItem("Groceries", "21/05/2025 Weekly groceries", "R535", R.drawable.ic_groceries),
+            TransactionRecordItem("Transport", "21/05/2025", "R600.00", R.drawable.ic_transport),
+            TransactionRecordItem("Emergency Fund", "15/03/2025", "R500.00", R.drawable.ic_emergency_stop)
         )
 
         recyclerView.layoutManager = LinearLayoutManager(context) // Set the layout manager

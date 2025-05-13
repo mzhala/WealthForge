@@ -63,9 +63,9 @@ class SpendingByCategoryFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
 
         val spendingByCategoryRecords = listOf(
-            SpendingByCategoryItem("Spotify", "R10 000.00", "R5 000.00", R.drawable.spotify),
-            SpendingByCategoryItem("Grocery", "R7 900.00", "R7 500.00", R.drawable.grocery),
-            SpendingByCategoryItem("Transport", "R1 000.00", "R1 200.00", R.drawable.transport)
+            SpendingByCategoryItem("Groceries", "R4 500", "R635", R.drawable.ic_groceries),
+            SpendingByCategoryItem("Transport",  "R1 500","R600.00", R.drawable.ic_transport),
+            SpendingByCategoryItem("Emergency Fund", "200", "R500.00", R.drawable.ic_emergency_stop)
         )
 
         recyclerView.layoutManager = LinearLayoutManager(context) // Set the layout manager

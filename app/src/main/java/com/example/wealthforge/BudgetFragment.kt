@@ -13,6 +13,7 @@ import android.widget.NumberPicker
 import android.widget.Spinner
 import java.util.*
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -200,13 +201,14 @@ class BudgetFragment : Fragment() {
                         Toast.makeText(context, "User does not exist", Toast.LENGTH_SHORT).show()
                         return@launch
                     }
-
+                    val iconResId = db.categoryDao().getCategoryIcon(userId, category_name)
                     val categoryBudget = CategoryBudget(
                         userId = userId,
                         category_name = category_name,
                         year = year,
                         month = month,
-                        amount = amount
+                        amount = amount,
+                        iconResId =  R.drawable.ic_categories
                     )
 
                     lifecycleScope.launch {
@@ -214,11 +216,19 @@ class BudgetFragment : Fragment() {
 
                         if (exists == 0) {
                             db.categoryBudgetDao().insertCategoryBudget(categoryBudget)
+
+                            val sum = db.categoryBudgetDao().getTotalCategoryBudgetCountByUser(userId, year, month)
+
+
+
                             withContext(Dispatchers.Main) {
                                 Toast.makeText(context, "Category Budget Amount Added", Toast.LENGTH_SHORT).show()
                             }
                         } else {
                             db.categoryBudgetDao().updateCategoryBudget(categoryBudget)
+                            val sum = db.categoryBudgetDao().getTotalCategoryBudgetCountByUser(userId, year, month)
+
+
                             withContext(Dispatchers.Main) {
                                 Toast.makeText(context, "Category Budget Amount Updated", Toast.LENGTH_SHORT).show()
                             }
@@ -231,8 +241,46 @@ class BudgetFragment : Fragment() {
             }
         }
 
-        // recycle view displaying categories added on budget
+        // recycler view for displaying category budgets
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+
+        lifecycleScope.launch {
+            val userId = userViewModel.userId.value?.toIntOrNull()
+            val month = view.findViewById<Spinner>(R.id.monthSpinner).selectedItem.toString()
+            val year = view.findViewById<Spinner>(R.id.yearSpinner).selectedItem.toString().toIntOrNull() ?: 0
+
+            if (userId != null) {
+                //val savedCategories = db.categoryDao().getCategoriesByUser(userId)
+                val savedCategoryBudgets = (db.categoryBudgetDao().getCategoryBudgetsByUser(userId, year, month) as? List<CategoryBudget>) ?: emptyList()
+                val sum = db.categoryBudgetDao().getTotalCategoryBudgetCountByUser(userId, year, month)
+
+
+
+                val categoryBudgetItems = savedCategoryBudgets.map {
+                    CategoryBudgetItem(
+                        id = it.id,
+                        name = it.category_name,
+                        amount = "R${it.amount}",
+                        iconResId = it.iconResId ?: R.drawable.ic_categories
+                    )
+                }
+                recyclerView.adapter = CategoryBudgetAdapter(categoryBudgetItems.toMutableList()) { item ->
+                    // This lambda receives the id to delete
+                    lifecycleScope.launch {
+                        db.categoryDao().deleteCategoryById(item.id)
+                        Toast.makeText(requireContext(), "Category deleted", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "Error fetching user ID", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+        // recycle view displaying categories added on budget
+       /* val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
 
         val budgetCategories = listOf(
             CategoryBudgetItem("Spotify", "R500", R.drawable.spotify),
@@ -251,7 +299,7 @@ class BudgetFragment : Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(context) // Set the layout manager
         recyclerView.adapter = CategoryBudgetAdapter(budgetCategories) // Set the adapter to bind data
+    */
 
-    }
 
 }
