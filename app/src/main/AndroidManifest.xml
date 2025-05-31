@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -11,8 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WealthForge"
         tools:targetApi="31">
-
-        <!-- Set SignInActivity as the launcher -->
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".reset_password"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false"
+            android:theme="@style/Theme.WealthForge" /> <!-- Set SignInActivity as the launcher -->
         <activity
             android:name=".SignInActivity"
             android:exported="true"
@@ -20,17 +29,15 @@
             android:theme="@style/Theme.WealthForge.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Keep MainActivity for navigation after login -->
+        </activity> <!-- Keep MainActivity for navigation after login -->
         <activity
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.WealthForge.NoActionBar" />
-
     </application>
 
 </manifest>

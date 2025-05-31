@@ -9,7 +9,7 @@
         <item name="android:paddingBottom">0dp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:fontFamily">@font/quicksand_medium</item>
     </style>
 
     <style name="CardButtonStyle" parent="Widget.AppCompat.Button">
