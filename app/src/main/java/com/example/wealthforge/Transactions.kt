@@ -12,7 +12,8 @@ import androidx.room.*
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index(value = ["user_id", "category_name, month, year"], unique = true)]
+    indices = [Index(value = ["user_id", "category_name", "month", "year"], unique = true)]
+
 )
 data class Transactions(
     @PrimaryKey(autoGenerate = true)
@@ -30,7 +31,7 @@ data class Transactions(
     val month: String,
     val monthIndex: Int,
     val year: Int,
-
+    val day: Int,
     val iconResId: Int? // Path or URI to the profile picture, optional
 
 )

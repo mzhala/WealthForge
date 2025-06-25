@@ -28,4 +28,11 @@ interface TransactionsDao {
         endMonth: Int,
         endYear: Int
     ): List<Transactions>
+
+    @Query("SELECT * FROM transactions WHERE user_id = :userId ORDER BY year DESC, monthIndex DESC, day DESC")
+    suspend fun getRecentTransactions(userId: Int): List<Transactions>
+
+    @Query("DELETE FROM transactions WHERE id = :transactionId")
+    suspend fun deleteTransactionById(transactionId: Int)
+
 }

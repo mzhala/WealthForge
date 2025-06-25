@@ -92,8 +92,8 @@
                 android:layout_height="match_parent">
 
                 <Spinner
-                    android:id="@+id/monthSpinner"
-                    android:layout_width="86dp"
+                    android:id="@+id/daySpinner"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/spinner_background"
                     android:paddingEnd="16dp"
@@ -105,8 +105,22 @@
                     android:layout_weight="1"/>
 
                 <Spinner
+                    android:id="@+id/monthSpinner"
+                    style="@style/LabelStyle"
+                    android:layout_width="68dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_background"
+                    android:paddingEnd="16dp" />
+
+                <Space
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <Spinner
                     android:id="@+id/yearSpinner"
-                    android:layout_width="86dp"
+                    android:layout_width="68dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/spinner_background"
                     android:paddingEnd="16dp"
@@ -161,7 +175,8 @@
                     android:hint="0"
                     android:inputType="number"
                     style="@style/Money"
-                    android:background="@android:color/white" />
+                    android:background="@android:color/white"
+                    android:imeOptions="actionDone"/>
             </LinearLayout>
 
             <Space
@@ -198,7 +213,9 @@
                 android:paddingStart="5dp"
                 android:hint=""
                 style="@style/Money"
-                android:background="@drawable/linear_layout_border"/>
+                android:background="@drawable/linear_layout_border"
+                android:inputType="text"
+                android:imeOptions="actionDone"/>
 
             <Space
                 android:layout_width="12dp"
@@ -247,11 +264,11 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/addCategoryButton"
+            android:id="@+id/addTransactionButton"
             style="@style/MyButtonStyle"
             android:layout_width="184dp"
             android:layout_height="match_parent"
-            android:text="Add Category" />
+            android:text="Add Transaction" />
 
     </LinearLayout>
 

@@ -8,15 +8,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wealthforge.R
 
-class TransactionRecordAdapter(private val items: List<TransactionRecordItem>) :
-    RecyclerView.Adapter<TransactionRecordAdapter.ViewHolder>() {
-
+class TransactionRecordAdapter(
+    private val items: MutableList<TransactionRecordItem>,
+    private val onDeleteClick: (TransactionRecordItem) -> Unit
+) : RecyclerView.Adapter<TransactionRecordAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)
         val categoryName: TextView = view.findViewById(R.id.categoryName)
         val transactionDateAndDescription: TextView = view.findViewById(R.id.transactionDateAndDescription)
         val transactionAmount: TextView = view.findViewById(R.id.transactionAmount)
+        val deleteButton: ImageView = view.findViewById(R.id.deleteButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,6 +33,11 @@ class TransactionRecordAdapter(private val items: List<TransactionRecordItem>) :
         holder.categoryName.text = item.name
         holder.transactionDateAndDescription.text = item.date
         holder.transactionAmount.text = item.amount
+
+        holder.deleteButton.setOnClickListener {
+            onDeleteClick(item)
+        }
+
     }
 
     override fun getItemCount(): Int = items.size

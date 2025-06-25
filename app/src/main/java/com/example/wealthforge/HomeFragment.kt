@@ -33,14 +33,14 @@ class HomeFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
 
         val transactionRecords = listOf(
-            TransactionRecordItem("Groceries", "29/05/2025 study snack", "R100", R.drawable.ic_groceries),
-            TransactionRecordItem("Groceries", "21/05/2025 Weekly groceries", "R535", R.drawable.ic_groceries),
-            TransactionRecordItem("Transport", "21/05/2025", "R600.00", R.drawable.ic_transport),
-            TransactionRecordItem("Emergency Fund", "15/03/2025", "R500.00", R.drawable.ic_emergency_stop)
+            TransactionRecordItem(0,"Groceries", "29/05/2025 study snack", "R100", R.drawable.ic_groceries),
+            TransactionRecordItem(0, "Groceries", "21/05/2025 Weekly groceries", "R535", R.drawable.ic_groceries),
+            TransactionRecordItem(0,"Transport", "21/05/2025", "R600.00", R.drawable.ic_transport),
+            TransactionRecordItem(0,"Emergency Fund", "15/03/2025", "R500.00", R.drawable.ic_emergency_stop)
         )
 
         recyclerView.layoutManager = LinearLayoutManager(context) // Set the layout manager
-        recyclerView.adapter = TransactionRecordAdapter(transactionRecords) // Set the adapter to bind data
+        /*recyclerView.adapter = TransactionRecordAdapter(transactionRecords) // Set the adapter to bind data*/
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
