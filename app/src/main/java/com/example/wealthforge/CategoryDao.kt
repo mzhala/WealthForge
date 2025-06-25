@@ -24,7 +24,7 @@ interface CategoryDao {
     suspend fun deleteCategoryById(id: Int)
 
     @Query("SELECT COUNT(*) FROM categories WHERE category_name = :name AND user_id = :user_id")
-    suspend fun categoryExists(name: String, user_id: Int): Int
+    suspend fun categoryExists(user_id: Int, name: String): Int
 
     @Query("SELECT COUNT(*) FROM categories WHERE user_id = :userId AND category_name = :name")
     suspend fun categoryExistsForUser(userId: Int, name: String): Int

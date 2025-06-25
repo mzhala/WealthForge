@@ -225,7 +225,25 @@
 
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text=": "
+            style="@style/LabelStyle"
+            android:id="@+id/categories_total"/>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="0dp" />
+
+    </LinearLayout>
     <!-- Add Category to budget -->
     <LinearLayout
         android:layout_width="match_parent"

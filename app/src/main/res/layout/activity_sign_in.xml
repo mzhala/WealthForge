@@ -45,7 +45,9 @@
             android:paddingStart="5dp"
             android:hint="Username"
             style="@style/Money"
-            android:background="@drawable/linear_layout_border"/>
+            android:background="@drawable/linear_layout_border"
+            android:inputType = "text"
+            android:imeOptions="actionDone"/>
 
         <Space
             android:layout_width="match_parent"
@@ -60,7 +62,8 @@
             android:hint="Password"
             style="@style/Money"
             android:inputType = "textPassword"
-            android:background="@drawable/linear_layout_border"/>
+            android:background="@drawable/linear_layout_border"
+            android:imeOptions="actionDone"/>
 
         <Space
             android:layout_width="match_parent"

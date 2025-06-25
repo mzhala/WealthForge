@@ -33,4 +33,8 @@ interface CategoryBudgetDao {
     @Query("SELECT COUNT(*) FROM categoryBudget WHERE user_id = :userId AND category_name = :name AND year =:year AND month = :month")
     suspend fun categoryBudgetExistsForUser(userId: Int, name: String, year: Int, month: String): Int
 
+    // Delete category from budgets for a specific user
+    @Query("DELETE FROM categoryBudget WHERE id = :id")
+    suspend fun deleteCategoryBudgetById(id: Int)
+
 }
