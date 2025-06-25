@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var db: AppDatabase
     private lateinit var userDao: UserDao
     private lateinit var usernameTextView: TextView
-    private val userViewModel: UserViewModel by viewModels()
+    val userViewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

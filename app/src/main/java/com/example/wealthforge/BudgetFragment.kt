@@ -148,7 +148,7 @@ class BudgetFragment : Fragment() {
     private fun addCategoryBudget() {
         val context = requireContext()
         val userId = userViewModel.userId.value?.toIntOrNull()
-        val amount = categoryBudgetAmountInput.text.toString().toIntOrNull() ?: 0
+        val amount = categoryBudgetAmountInput.text.toString().toDoubleOrNull() ?: 0.0
         val category_name = categorySpinner.selectedItem?.toString() ?: return
         val month = monthSpinner.selectedItem.toString()
         val year = yearSpinner.selectedItem.toString().toIntOrNull() ?: 0
@@ -245,8 +245,10 @@ class BudgetFragment : Fragment() {
                     loadBudgetItems() // refresh
                 }
             }
-            val total = db.categoryBudgetDao().getTotalCategoryBudgetCountByUser(userId, year, month)
-            totalTextView?.text = "Total: R$total"
+            val total: Double? = db.categoryBudgetDao().getTotalCategoryBudgetCountByUser(userId, year, month)
+            totalTextView?.text = "Total: R${"%.2f".format(total ?: 0.0)}"
+
+
         }
     }
 

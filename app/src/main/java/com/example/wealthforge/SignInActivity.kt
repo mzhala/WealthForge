@@ -106,20 +106,6 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun insertDefaultCategoryBudget(userId: Int) {
-        val categoryBudgetDao = db.categoryBudgetDao()
-        val defaultCategoryBudgets = listOf(
-            CategoryBudget(0, userId, "Groceries", 2025, "May", 2000, R.drawable.ic_groceries),
-            CategoryBudget(0, userId, "Rent", 2025, "May", 5000, R.drawable.ic_rent),
-            CategoryBudget(0, userId, "Transport", 2025, "May", 500, R.drawable.ic_transport),
-            CategoryBudget(0, userId, "Emergency Fund", 2025, "May", 200, R.drawable.ic_emergency_stop),
-        )
-        defaultCategoryBudgets.forEach { categoryBudget ->
-            if (categoryBudgetDao.categoryBudgetExistsForUser(userId, categoryBudget.category_name, categoryBudget.year, categoryBudget.month) == 0) {
-                categoryBudgetDao.insertCategoryBudget(categoryBudget)
-            }
 
-        }
-    }
 
 }

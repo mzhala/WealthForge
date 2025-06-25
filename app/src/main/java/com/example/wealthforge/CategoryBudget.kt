@@ -24,7 +24,7 @@ data class CategoryBudget(
 
     val year: Int,
     val month: String,
-    val amount: Int,
+    val amount: Double,
     val iconResId: Int? // Path or URI to the profile picture, optional
 
 )

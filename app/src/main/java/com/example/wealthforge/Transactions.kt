@@ -12,7 +12,8 @@ import androidx.room.*
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index(value = ["user_id", "category_name", "month", "year"], unique = true)]
+
+    indices = [androidx.room.Index(value = ["id"], unique = true)] // Enforce unique id
 
 )
 data class Transactions(
