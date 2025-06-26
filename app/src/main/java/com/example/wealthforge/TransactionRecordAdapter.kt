@@ -1,17 +1,24 @@
 package com.example.wealthforge
 
+import android.app.AlertDialog
+import android.content.Context
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wealthforge.R
 
 class TransactionRecordAdapter(
+    private val context: Context,
     private val items: MutableList<TransactionRecordItem>,
     private val onDeleteClick: (TransactionRecordItem) -> Unit
 ) : RecyclerView.Adapter<TransactionRecordAdapter.ViewHolder>() {
+
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)
@@ -19,6 +26,7 @@ class TransactionRecordAdapter(
         val transactionDateAndDescription: TextView = view.findViewById(R.id.transactionDateAndDescription)
         val transactionAmount: TextView = view.findViewById(R.id.transactionAmount)
         val deleteButton: ImageView = view.findViewById(R.id.deleteButton)
+        val viewTransactionButton: ImageView = view.findViewById(R.id.viewTransactionButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,8 +45,61 @@ class TransactionRecordAdapter(
         holder.deleteButton.setOnClickListener {
             onDeleteClick(item)
         }
-
+        holder.viewTransactionButton.setOnClickListener {
+            showTransactionDetailsDialog(context, item)
+        }
     }
 
     override fun getItemCount(): Int = items.size
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    private fun showTransactionDetailsDialog(context: Context, item: TransactionRecordItem) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_transaction_detail, null)
+
+        val category = dialogView.findViewById<TextView>(R.id.detailCategory)
+        val amount = dialogView.findViewById<TextView>(R.id.detailAmount)
+        val date = dialogView.findViewById<TextView>(R.id.detailDate)
+        val description = dialogView.findViewById<TextView>(R.id.detailDescription)
+        val receiptImage = dialogView.findViewById<ImageView>(R.id.detailReceipt)
+
+        category.text = "Category: ${item.name}"
+        amount.text = "Amount: ${item.amount}"
+        date.text = "Date: ${item.date}"
+        /*description.text = "Description: ${item.description ?: "N/A"}"*/
+
+        if (!item.receiptUri.isNullOrEmpty()) {
+            val resolver = context.contentResolver
+            val uri = Uri.parse(item.receiptUri)
+
+            try {
+                val source = ImageDecoder.createSource(resolver, uri)
+                val bitmap = ImageDecoder.decodeBitmap(source)
+                receiptImage.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                receiptImage.setImageResource(R.drawable.ic_no_receipt)
+                e.printStackTrace()
+            }
+
+        } else {
+            val resolver = context.contentResolver
+            val uri = Uri.parse(item.receiptUri)
+
+            try {
+                val source = ImageDecoder.createSource(resolver, uri)
+                val bitmap = ImageDecoder.decodeBitmap(source)
+                receiptImage.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                receiptImage.setImageResource(R.drawable.ic_no_receipt)
+                e.printStackTrace()
+            }
+
+        }
+
+        AlertDialog.Builder(context)
+            .setTitle("Transaction Details")
+            .setView(dialogView)
+            .setPositiveButton("Close", null)
+            .show()
+    }
+
 }

@@ -33,6 +33,7 @@ data class Transactions(
     val monthIndex: Int,
     val year: Int,
     val day: Int,
-    val iconResId: Int? // Path or URI to the profile picture, optional
+    val iconResId: Int?, // Path or URI to the profile picture, optional
+    val receipt: String? = null   // NEW: store URI as String
 
 )

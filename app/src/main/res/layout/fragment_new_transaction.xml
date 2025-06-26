@@ -235,12 +235,12 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/uploadImageButton"
+                android:id="@+id/pickReceiptButton"
                 style="@style/CardButtonStyle"
-                android:layout_width="120dp"
+                android:layout_width="190dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:text="Upload Image" />
+                android:text="Attach supporting image" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -272,6 +272,7 @@
             android:layout_width="184dp"
             android:layout_height="match_parent"
             android:text="Add Transaction" />
+
 
     </LinearLayout>
 

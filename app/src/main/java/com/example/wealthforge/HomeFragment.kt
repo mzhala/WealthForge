@@ -163,12 +163,13 @@ class HomeFragment : Fragment() {
                     name = it.categoryName,
                     date = "${it.day} ${it.month} ${it.year} ${it.description}",
                     amount = "R${"%.2f".format(it.amount)}",
-                    iconResId = it.iconResId ?: R.drawable.ic_categories
+                    iconResId = it.iconResId ?: R.drawable.ic_categories,
+                    receiptUri = it.receipt
                 )
             }.toMutableList()
 
             withContext(Dispatchers.Main) {
-                recyclerView.adapter = TransactionRecordAdapter(items) { item ->
+                recyclerView.adapter = TransactionRecordAdapter(requireContext(), items) { item ->
                     lifecycleScope.launch {
                         db.transactionsDao().deleteTransactionById(item.id)
                         loadRecentTransactions(userId, recyclerView) // Reload the list
@@ -177,4 +178,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+
 }

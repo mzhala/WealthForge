@@ -15,11 +15,26 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.result.contract.ActivityResultContracts
 
 class NewTransactionFragment : Fragment() {
 
+    private var receiptUri: Uri? = null
+
     private lateinit var db: AppDatabase
     private val userViewModel: UserViewModel by activityViewModels()
+
+    private val pickImageLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            receiptUri = uri
+            Toast.makeText(requireContext(), "Receipt image selected", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,6 +95,8 @@ class NewTransactionFragment : Fragment() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+
         }
 
         yearSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -110,6 +127,12 @@ class NewTransactionFragment : Fragment() {
             loadRecentTransactions(userId, recyclerView)
         }
 
+        val pickReceiptButton: Button = view.findViewById(R.id.pickReceiptButton)
+        pickReceiptButton.setOnClickListener {
+            // Open gallery for images only
+            pickImageLauncher.launch("image/*")
+        }
+
         addTransactionButton.setOnClickListener {
             val category = categorySpinner.selectedItem?.toString() ?: return@setOnClickListener
             val amount = amountInput.text.toString().toDoubleOrNull()
@@ -127,6 +150,8 @@ class NewTransactionFragment : Fragment() {
             lifecycleScope.launch {
                 try {
                     val iconResId = db.categoryDao().getCategoryIcon(userId, category)
+                    val receiptPath = receiptUri?.toString() // store URI as string or handle differently
+
                     val transaction = Transactions(
                         userId = userId,
                         categoryName = category,
@@ -136,7 +161,8 @@ class NewTransactionFragment : Fragment() {
                         year = year,
                         monthIndex = monthIndex,
                         day = day,
-                        iconResId = iconResId
+                        iconResId = iconResId,
+                        receipt = receiptPath
                     )
 
                     db.transactionsDao().insertTransaction(transaction)
@@ -145,6 +171,7 @@ class NewTransactionFragment : Fragment() {
                         Toast.makeText(requireContext(), "Transaction added", Toast.LENGTH_SHORT).show()
                         amountInput.text.clear()
                         descriptionInput.text.clear()
+                        receiptUri = null  // reset after use
                         loadRecentTransactions(userId, recyclerView)
                     }
 
@@ -155,6 +182,10 @@ class NewTransactionFragment : Fragment() {
                 }
             }
         }
+
+
+
+
     }
 
 
@@ -168,12 +199,13 @@ class NewTransactionFragment : Fragment() {
                     name = it.categoryName,
                     date = "${it.day} ${it.month} ${it.year} ${it.description}",
                     amount = "R${"%.2f".format(it.amount)}",
-                    iconResId = it.iconResId ?: R.drawable.ic_categories
+                    iconResId = it.iconResId ?: R.drawable.ic_categories,
+                    receiptUri = it.receipt
                 )
             }.toMutableList()
 
             withContext(Dispatchers.Main) {
-                recyclerView.adapter = TransactionRecordAdapter(items) { item ->
+                recyclerView.adapter = TransactionRecordAdapter(requireContext(), items) { item ->
                     lifecycleScope.launch {
                         db.transactionsDao().deleteTransactionById(item.id)
                         loadRecentTransactions(userId, recyclerView) // Reload the list
