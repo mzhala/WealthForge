@@ -1,6 +1,7 @@
 package com.example.wealthforge
 
 import UserViewModel
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,11 +42,36 @@ class HomeFragment : Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        val userId = userViewModel.userId.value?.toIntOrNull()
-        if (userId != null) {
-            loadRecentTransactions(userId, recyclerView)
+        userViewModel.userId.observe(viewLifecycleOwner) { userIdStr ->
+            val userId = userIdStr?.toIntOrNull()
+            if (userId != null) {
+                loadRecentTransactions(userId, recyclerView)
+            }
         }
+
+        showDailyTipDialog()
     }
+
+
+    private fun showDailyTipDialog() {
+        val tips = listOf(
+            "Track your spending daily to build better habits!",
+            "You're one step closer to your goals – keep going!",
+            "Small savings today lead to big wins tomorrow.",
+            "Budgeting is the first step toward financial freedom."
+        )
+
+        val randomTip = tips.random()
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("💡 Daily Tip")
+            .setMessage(randomTip)
+            .setPositiveButton("Got it!") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
 
     private fun loadRecentTransactions(userId: Int, recyclerView: RecyclerView) {
         lifecycleScope.launch {
