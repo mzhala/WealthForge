@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,10 @@ import com.example.wealthforge.data.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Calendar
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
@@ -49,6 +54,18 @@ class HomeFragment : Fragment() {
             }
         }
 
+        val monthNames = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+        userViewModel.userId.observe(viewLifecycleOwner) { userIdStr ->
+            val userId = userIdStr?.toIntOrNull()
+            if (userId != null) {
+                loadRecentTransactions(userId, recyclerView)
+                showCurrentMonthBudget(userId)
+            }
+        }
+
+
         showDailyTipDialog()
     }
 
@@ -72,6 +89,55 @@ class HomeFragment : Fragment() {
             .show()
     }
 
+    private fun showCurrentMonthBudget(userId: Int) {
+        val textView = view?.findViewById<TextView>(R.id.budgetAmount) ?: return
+        val textView1 = view?.findViewById<TextView>(R.id.expenseAmount) ?: return
+        val textView2 = view?.findViewById<TextView>(R.id.goalAmount) ?: return
+
+        val calendar = Calendar.getInstance()
+        val currentMonth = calendar.get(Calendar.MONTH) // 0-based
+        val currentYear = calendar.get(Calendar.YEAR)
+        val monthName = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")[currentMonth]
+
+        lifecycleScope.launch {
+            val amount = db.budgetDao().getBudgetAmountForUserAndMonthYear(userId, monthName, currentYear)
+            val expenseAmount = db.categoryBudgetDao().getTotalCategoryBudgetAmountByType(userId, monthName, currentYear, "Expense")
+            val goalAmount  = db.categoryBudgetDao().getTotalCategoryBudgetAmountByType(userId, monthName, currentYear, "Goal")
+            withContext(Dispatchers.Main) {
+                if (amount != null) {
+                    val formatted =  formatAmountWithSpace(amount)
+                    textView.text = formatted
+                } else {
+                    textView.text = "R0"
+                }
+
+                if (expenseAmount != null) {
+                    val formatted = formatAmountWithSpace(expenseAmount)
+                    textView1.text = formatted
+                } else {
+                    textView1.text = "R0"
+                }
+
+                if (goalAmount != null) {
+                    val formatted = formatAmountWithSpace(goalAmount)
+                    textView2.text = formatted
+                } else {
+                    textView2.text = "R0"
+                }
+            }
+        }
+    }
+
+    fun formatAmountWithSpace(amount: Number): String {
+        val symbols = DecimalFormatSymbols(Locale.getDefault()).apply {
+            groupingSeparator = ' '  // space as thousands separator
+            decimalSeparator = '.'   // decimal separator, not needed if no decimals
+        }
+        val pattern = "#,##0"  // no decimals
+        val decimalFormat = DecimalFormat(pattern, symbols)
+        return "R${decimalFormat.format(amount)}"
+    }
 
     private fun loadRecentTransactions(userId: Int, recyclerView: RecyclerView) {
         lifecycleScope.launch {

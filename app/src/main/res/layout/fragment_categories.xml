@@ -125,7 +125,7 @@
                 android:layout_weight="1" />
 
             <CheckBox
-                android:id="@+id/agreeCheckbox"
+                android:id="@+id/recurringCheckbox"
                 android:layout_width="184dp"
                 android:layout_height="wrap_content"
                 style="@style/CustomCheckBox" />

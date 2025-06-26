@@ -93,6 +93,47 @@
         android:background="#000000"
         android:layout_marginTop="10dp"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Category"
+            style="@style/LabelStyle"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="25dp"
+            android:gravity="center_vertical"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:text="Budget"
+            style="@style/Money"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="25dp"
+            android:gravity="center_vertical"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:text="Spent"
+            style="@style/Money"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

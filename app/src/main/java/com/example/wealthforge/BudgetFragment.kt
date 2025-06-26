@@ -28,6 +28,8 @@ class BudgetFragment : Fragment() {
     private lateinit var categoryBudgetAmountInput: EditText
     private lateinit var recyclerView: RecyclerView
     private lateinit var categoryBudgetAdapter: CategoryBudgetAdapter
+    private lateinit var typeSpinner: Spinner
+    private lateinit var recurringCheckbox: CheckBox
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +47,8 @@ class BudgetFragment : Fragment() {
         setupListeners()
         loadCategoryNames()
         loadBudgetItems()
+
+
     }
 
     private fun initViews(view: View) {
@@ -56,6 +60,8 @@ class BudgetFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+
     }
 
     private fun setupSpinners() {
@@ -177,7 +183,8 @@ class BudgetFragment : Fragment() {
                         year = year,
                         month = month,
                         amount = amount,
-                        iconResId = R.drawable.ic_categories
+                        iconResId = R.drawable.ic_categories,
+
                     )
                 }
 

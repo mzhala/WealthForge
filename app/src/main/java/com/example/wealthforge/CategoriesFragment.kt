@@ -61,7 +61,7 @@ class CategoriesFragment : Fragment() {
     private fun addCategory(view: View) {
         val name = view.findViewById<EditText>(R.id.categoryName).text.toString().trim()
         val type = view.findViewById<Spinner>(R.id.categoryTypeSpinner).selectedItem.toString()
-        val isRecurring = view.findViewById<CheckBox>(R.id.agreeCheckbox).isChecked
+        val isRecurring = view.findViewById<CheckBox>(R.id.recurringCheckbox).isChecked
         val limitAmount = view.findViewById<EditText>(R.id.limitAmountInput).text.toString().toDoubleOrNull() ?: 0.0
         val iconResId = R.drawable.ic_categories
         val userId = userViewModel.userId.value?.toIntOrNull()

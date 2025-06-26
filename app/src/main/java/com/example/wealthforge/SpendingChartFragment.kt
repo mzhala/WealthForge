@@ -136,15 +136,33 @@ class SpendingChartFragment : Fragment() {
                 val budgetSet = BarDataSet(entriesBudget, "Budget")
                 budgetSet.color = resources.getColor(R.color.green, null)
 
+                val groupSpace = 0.2f
+                val barSpace = 0.02f
+                val barWidth = 0.4f
+
+                val groupCount = labels.size
+
                 val data = BarData(spentSet, budgetSet)
-                data.barWidth = 0.4f
+                data.barWidth = barWidth
 
                 barChart.data = data
-                barChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
-                barChart.xAxis.granularity = 1f
-                barChart.groupBars(0f, 0.2f, 0.02f)
 
+                val xAxis = barChart.xAxis
+                xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+                xAxis.granularity = 1f
+                xAxis.position = com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM
+                xAxis.setCenterAxisLabels(true)
+
+// Set axis min and max for grouped bars so they fit well
+                xAxis.axisMinimum = 0f
+                xAxis.axisMaximum = 0f + data.getGroupWidth(groupSpace, barSpace) * groupCount
+
+// Group the bars starting at x=0f with groupSpace and barSpace
+                barChart.groupBars(0f, groupSpace, barSpace)
+
+                barChart.setFitBars(true)
                 barChart.invalidate()
+
 
                 // Load monthly totals after categories
                 loadMonthlyTotals(userId, startMonthIndex, startYear, endMonthIndex, endYear)
@@ -188,15 +206,33 @@ class SpendingChartFragment : Fragment() {
                 val budgetSet = BarDataSet(entriesBudget, "Budget")
                 budgetSet.color = resources.getColor(R.color.green, null)
 
+                val groupSpace = 0.2f
+                val barSpace = 0.02f
+                val barWidth = 0.4f
+
+                val groupCount = labels.size
+
                 val data = BarData(spentSet, budgetSet)
-                data.barWidth = 0.4f
+                data.barWidth = barWidth
 
                 barChart.data = data
-                barChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
-                barChart.xAxis.granularity = 1f
-                barChart.groupBars(0f, 0.2f, 0.02f)
 
+                val xAxis = barChart.xAxis
+                xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+                xAxis.granularity = 1f
+                xAxis.position = com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM
+                xAxis.setCenterAxisLabels(true)
+
+// Set axis min and max for grouped bars so they fit well
+                xAxis.axisMinimum = 0f
+                xAxis.axisMaximum = 0f + data.getGroupWidth(groupSpace, barSpace) * groupCount
+
+// Group the bars starting at x=0f with groupSpace and barSpace
+                barChart.groupBars(0f, groupSpace, barSpace)
+
+                barChart.setFitBars(true)
                 barChart.invalidate()
+
             }
         }
     }

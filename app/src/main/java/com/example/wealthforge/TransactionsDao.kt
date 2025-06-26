@@ -16,12 +16,18 @@ interface TransactionsDao {
     suspend fun getAllTransactionsForUser(userId: Int): List<Transactions>
 
     @Query("""
-        SELECT * FROM transactions
-        WHERE user_id = :userId AND (
-            (year > :startYear OR (year = :startYear AND monthIndex >= :startMonth)) AND
-            (year < :endYear OR (year = :endYear AND monthIndex <= :endMonth))
-        )
-    """)
+    SELECT * FROM transactions
+    WHERE user_id = :userId 
+      AND (
+        year > :startYear 
+        OR (year = :startYear AND monthIndex >= :startMonth)
+      )
+      AND (
+        year < :endYear 
+        OR (year = :endYear AND monthIndex <= :endMonth)
+      )
+    ORDER BY year, monthIndex, day
+""")
     suspend fun getTransactionsBetween(
         userId: Int,
         startMonth: Int,
@@ -29,6 +35,7 @@ interface TransactionsDao {
         endMonth: Int,
         endYear: Int
     ): List<Transactions>
+
 
     @Query("SELECT * FROM transactions WHERE user_id = :userId ORDER BY year DESC, monthIndex DESC, day DESC")
     suspend fun getRecentTransactions(userId: Int): List<Transactions>
