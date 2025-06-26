@@ -71,6 +71,11 @@ class CategoriesFragment : Fragment() {
             return
         }
 
+        if (name == null || name == "") {
+                Toast.makeText(requireContext(), "Please enter category name", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         lifecycleScope.launch {
             try {
                 val userExists = db.userDao().getUsername(userId) != null
@@ -78,6 +83,7 @@ class CategoriesFragment : Fragment() {
                     Toast.makeText(requireContext(), "User does not exist", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
+
 
                 val exists = db.categoryDao().categoryExists(userId, name) > 0
                 if (exists) {

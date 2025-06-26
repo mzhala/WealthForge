@@ -55,13 +55,17 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <Spinner
-                android:id="@+id/categorySpinner"
+            <LinearLayout
                 android:layout_width="184dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/spinner_background"
-                android:paddingEnd="16dp"
-                style="@style/LabelStyle"/>
+                android:background="@drawable/white_box">
+                <Spinner
+                    android:id="@+id/categorySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingEnd="16dp"
+                    style="@style/LabelStyle"/>
+            </LinearLayout>
 
             <Space
                 android:layout_width="12dp"
@@ -90,15 +94,15 @@
 
             <LinearLayout
                 android:layout_width="184dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/white_box">
 
                 <Spinner
                     android:id="@+id/daySpinner"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/spinner_background"
                     android:paddingEnd="16dp"
-                    style="@style/LabelStyle" />
+                    style="@style/LabelStyle"/>
 
                 <Space
                     android:layout_width="1dp"
@@ -107,25 +111,23 @@
 
                 <Spinner
                     android:id="@+id/monthSpinner"
-                    style="@style/LabelStyle"
-                    android:layout_width="68dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/spinner_background"
-                    android:paddingEnd="16dp" />
+                    android:paddingEnd="16dp"
+                    style="@style/LabelStyle"/>
 
                 <Space
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"/>
 
+
                 <Spinner
                     android:id="@+id/yearSpinner"
-                    android:layout_width="68dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/spinner_background"
                     android:paddingEnd="16dp"
-                    style="@style/LabelStyle" />
+                    style="@style/LabelStyle"/>
 
             </LinearLayout>
 
