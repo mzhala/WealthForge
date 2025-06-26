@@ -115,4 +115,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Demo Video
 
+The demo was screen recorded from an android phone.
+
 https://youtu.be/0b8GmuzJoW0
