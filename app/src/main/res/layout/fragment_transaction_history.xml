@@ -8,6 +8,7 @@
     android:paddingLeft="0dp"
     android:paddingTop="0dp"
     android:paddingRight="0dp"
+    android:paddingBottom="5dp"
     tools:context=".TransactionHistoryFragment">
 
     <!-- StartDate (Month, Year) -->
@@ -101,4 +102,47 @@
         android:layout_marginTop="20dp"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="25dp"/>
+
+        <TextView
+            android:layout_width="225dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Total"
+            style="@style/LabelStyle"
+            android:id="@+id/categoryName"/>
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="25dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="R10 000.00"
+            style="@style/LabelStyle"
+            android:id="@+id/transactionAmountTotal"/>
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
+    </LinearLayout>
 </LinearLayout>

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -75,9 +76,11 @@ class SpendingByCategoryFragment : Fragment() {
             val endMonthIndex = endMonthSpinner.selectedItemPosition
             val startYear = startYearSpinner.selectedItem.toString().toInt()
             val endYear = endYearSpinner.selectedItem.toString().toInt()
+            val totalBudgetTextView = view.findViewById<TextView>(R.id.categoryBudgetAmountTotal)
+            val totalSpentTextView = view.findViewById<TextView>(R.id.categorySpentAmountTotal)
 
             if (userId != null) {
-                loadTransactions(userId, startMonthIndex, startYear, endMonthIndex, endYear, recyclerView)
+                loadTransactions(userId, startMonthIndex, startYear, endMonthIndex, endYear, recyclerView, totalBudgetTextView, totalSpentTextView)
             }
         }
 
@@ -109,24 +112,50 @@ class SpendingByCategoryFragment : Fragment() {
         startYear: Int,
         endMonthIndex: Int,
         endYear: Int,
-        recyclerView: RecyclerView
+        recyclerView: RecyclerView,
+        totalBudgetTextView: TextView,
+        totalSpentTextView: TextView
+
     ) {
         lifecycleScope.launch {
-            val categoryTotals = db.transactionsDao()
-                .getCategorySpendingWithBudgetInRange(userId, startMonthIndex, startYear, endMonthIndex, endYear)
+            val categoryTotals = db.transactionsDao().getCategorySpendingWithBudgetInRange(userId, startMonthIndex, startYear, endMonthIndex, endYear)
+            val budgetTotal = db.categoryBudgetDao().getCategoryBudgetTotalInRange(userId, startMonthIndex, startYear, endMonthIndex, endYear)
+            val spentTotal = db.transactionsDao().getTransactionsBetweenTotal(userId, startMonthIndex, startYear, endMonthIndex, endYear)
+
+            val monthMap = mapOf(
+                "Jan" to 0, "Feb" to 1, "Mar" to 2, "Apr" to 3,
+                "May" to 4, "Jun" to 5, "Jul" to 6, "Aug" to 7,
+                "Sep" to 8, "Oct" to 9, "Nov" to 10, "Dec" to 11
+            )
 
             val items = categoryTotals.map {
                 SpendingByCategoryItem(
                     name = it.category_name,
-                    budgetAmount = "R${"%.2f".format(it.budget)}",
-                    spentAmount = "R${"%.2f".format(it.total)}",
+                    budgetAmount = "R" + "%,d".format((it.budget ?: 0.0).toInt()).replace(',', ' '),
+                    spentAmount = "R" + "%,d".format((it.total ?: 0.0).toInt()).replace(',', ' '),
                     iconResId = R.drawable.ic_categories
                 )
             }
 
             withContext(Dispatchers.Main) {
                 recyclerView.adapter = SpendingByCategoryAdapter(items)
+
+                val formattedBudget = if (budgetTotal != null) {
+                    "R" + "%,d".format(budgetTotal.toInt()) // Assumes Double or Int
+                } else {
+                    "R0"
+                }
+
+                val formattedSpent = if (spentTotal != null) {
+                    "R" + "%,d".format(spentTotal.toInt()) // Assumes Double or Int
+                } else {
+                    "R0"
+                }
+
+                totalBudgetTextView.text = formattedBudget
+                totalSpentTextView.text = formattedSpent
             }
+
         }
     }
 

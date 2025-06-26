@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [User::class, Category::class, Budget::class, CategoryBudget::class, Transactions::class], version = 10)
+@Database(entities = [User::class, Category::class, Budget::class, CategoryBudget::class, Transactions::class], version = 12)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

@@ -8,6 +8,7 @@
     android:paddingLeft="0dp"
     android:paddingTop="0dp"
     android:paddingRight="0dp"
+    android:paddingBottom="5dp"
     tools:context=".SpendingByCategoryFragment">
 
 
@@ -140,6 +141,49 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:clipToPadding="false"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="25dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Spotify"
+            style="@style/LabelStyle"
+            android:id="@+id/categoryName"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="25dp"
+            android:gravity="center_vertical"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:text="R10 000.00"
+            style="@style/Money"
+            android:id="@+id/categoryBudgetAmountTotal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="25dp"
+            android:gravity="center_vertical"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:text="R10 000.00"
+            style="@style/Money"
+            android:id="@+id/categorySpentAmountTotal"/>
+    </LinearLayout>
 
 </LinearLayout>

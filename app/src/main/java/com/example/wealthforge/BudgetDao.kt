@@ -45,50 +45,22 @@ interface BudgetDao {
     @Query("""
     SELECT
         b.year,
-        CASE b.month
-            WHEN 'Jan' THEN 0
-            WHEN 'Feb' THEN 1
-            WHEN 'Mar' THEN 2
-            WHEN 'Apr' THEN 3
-            WHEN 'May' THEN 4
-            WHEN 'Jun' THEN 5
-            WHEN 'Jul' THEN 6
-            WHEN 'Aug' THEN 7
-            WHEN 'Sep' THEN 8
-            WHEN 'Oct' THEN 9
-            WHEN 'Nov' THEN 10
-            WHEN 'Dec' THEN 11
-        END as month_num,
+        b.monthIndex as month_num,
         COALESCE(SUM(b.amount), 0) as budget,
         COALESCE(SUM(t.amount), 0) as spent
     FROM budget b
     LEFT JOIN transactions t
       ON b.user_id = t.user_id
       AND b.year = t.year
-      AND (
-        CASE b.month
-            WHEN 'Jan' THEN 0
-            WHEN 'Feb' THEN 1
-            WHEN 'Mar' THEN 2
-            WHEN 'Apr' THEN 3
-            WHEN 'May' THEN 4
-            WHEN 'Jun' THEN 5
-            WHEN 'Jul' THEN 6
-            WHEN 'Aug' THEN 7
-            WHEN 'Sep' THEN 8
-            WHEN 'Oct' THEN 9
-            WHEN 'Nov' THEN 10
-            WHEN 'Dec' THEN 11
-        END = t.monthIndex
-      )
+      AND b.monthIndex = t.monthIndex
     WHERE b.user_id = :userId
       AND (
-        (b.year > :startYear OR (b.year = :startYear AND month_num >= :startMonth))
+        (b.year > :startYear OR (b.year = :startYear AND b.monthIndex >= :startMonth))
         AND
-        (b.year < :endYear OR (b.year = :endYear AND month_num <= :endMonth))
+        (b.year < :endYear OR (b.year = :endYear AND b.monthIndex <= :endMonth))
       )
-    GROUP BY b.year, month_num
-    ORDER BY b.year, month_num
+    GROUP BY b.year, b.monthIndex
+    ORDER BY b.year, b.monthIndex
 """)
     fun getMonthlyTotals(
         userId: Int,
@@ -97,6 +69,7 @@ interface BudgetDao {
         endMonth: Int,
         endYear: Int
     ): List<MonthlyTotal>
+
 
 
     @Query("SELECT DISTINCT month, year FROM budget WHERE user_id = :userId")

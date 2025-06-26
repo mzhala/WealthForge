@@ -123,6 +123,22 @@ class BudgetFragment : Fragment() {
             return
         }
 
+        val monthIndex = when (month) {
+            "Jan" -> 0
+            "Feb" -> 1
+            "Mar" -> 2
+            "Apr" -> 3
+            "May" -> 4
+            "Jun" -> 5
+            "Jul" -> 6
+            "Aug" -> 7
+            "Sep" -> 8
+            "Oct" -> 9
+            "Nov" -> 10
+            "Dec" -> 11
+            else -> 0
+        }
+
         lifecycleScope.launch {
             try {
                 if (db.userDao().getUsername(userId) == null) {
@@ -134,7 +150,8 @@ class BudgetFragment : Fragment() {
                     userId = userId,
                     month = month,
                     year = year,
-                    amount = amount
+                    amount = amount,
+                    monthIndex = monthIndex
                 )
 
                 if (db.budgetDao().checkBudgetExists(userId, month, year) == 0) {
@@ -164,6 +181,23 @@ class BudgetFragment : Fragment() {
             return
         }
 
+        val monthIndex = when (month) {
+            "Jan" -> 0
+            "Feb" -> 1
+            "Mar" -> 2
+            "Apr" -> 3
+            "May" -> 4
+            "Jun" -> 5
+            "Jul" -> 6
+            "Aug" -> 7
+            "Sep" -> 8
+            "Oct" -> 9
+            "Nov" -> 10
+            "Dec" -> 11
+            else -> 0
+        }
+
+
         lifecycleScope.launch {
             try {
                 if (db.userDao().getUsername(userId) == null) {
@@ -175,7 +209,7 @@ class BudgetFragment : Fragment() {
                     .getCategoryBudget(userId, category_name, year, month)
 
                 val categoryBudget = if (existing != null) {
-                    existing.copy(amount = amount) // update the amount, preserve id
+                    existing.copy(amount = amount, monthIndex = monthIndex) // update the amount, preserve id
                 } else {
                     CategoryBudget(
                         userId = userId,
@@ -184,7 +218,7 @@ class BudgetFragment : Fragment() {
                         month = month,
                         amount = amount,
                         iconResId = R.drawable.ic_categories,
-
+                        monthIndex = monthIndex,
                     )
                 }
 

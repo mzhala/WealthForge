@@ -58,5 +58,43 @@ interface CategoryBudgetDao {
         type: String // e.g., "Expense" or "Income"
     ): Double?
 
+    @Query("""
+    SELECT SUM(amount)
+    FROM categoryBudget
+    WHERE user_id = :userId AND (
+        (year > :startYear AND year < :endYear) OR
+        (year = :startYear AND year = :endYear AND 
+            (CASE month 
+                WHEN 'Jan' THEN 0 WHEN 'Feb' THEN 1 WHEN 'Mar' THEN 2 
+                WHEN 'Apr' THEN 3 WHEN 'May' THEN 4 WHEN 'Jun' THEN 5 
+                WHEN 'Jul' THEN 6 WHEN 'Aug' THEN 7 WHEN 'Sep' THEN 8 
+                WHEN 'Oct' THEN 9 WHEN 'Nov' THEN 10 WHEN 'Dec' THEN 11 
+            END) BETWEEN :startMonthIndex AND :endMonthIndex) OR
+        (year = :startYear AND 
+            (CASE month 
+                WHEN 'Jan' THEN 0 WHEN 'Feb' THEN 1 WHEN 'Mar' THEN 2 
+                WHEN 'Apr' THEN 3 WHEN 'May' THEN 4 WHEN 'Jun' THEN 5 
+                WHEN 'Jul' THEN 6 WHEN 'Aug' THEN 7 WHEN 'Sep' THEN 8 
+                WHEN 'Oct' THEN 9 WHEN 'Nov' THEN 10 WHEN 'Dec' THEN 11 
+            END) >= :startMonthIndex) OR
+        (year = :endYear AND 
+            (CASE month 
+                WHEN 'Jan' THEN 0 WHEN 'Feb' THEN 1 WHEN 'Mar' THEN 2 
+                WHEN 'Apr' THEN 3 WHEN 'May' THEN 4 WHEN 'Jun' THEN 5 
+                WHEN 'Jul' THEN 6 WHEN 'Aug' THEN 7 WHEN 'Sep' THEN 8 
+                WHEN 'Oct' THEN 9 WHEN 'Nov' THEN 10 WHEN 'Dec' THEN 11 
+            END) <= :endMonthIndex)
+    )
+""")
+    suspend fun getCategoryBudgetTotalInRange(
+        userId: Int,
+        startMonthIndex: Int,
+        startYear: Int,
+        endMonthIndex: Int,
+        endYear: Int
+    ): Double?
+
+
+
 
 }

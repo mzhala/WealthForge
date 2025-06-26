@@ -8,6 +8,7 @@
     android:paddingLeft="0dp"
     android:paddingTop="0dp"
     android:paddingRight="0dp"
+    android:paddingBottom="5dp"
     tools:context=".SpendingChartFragment">
 
 
@@ -93,11 +94,23 @@
         android:background="#000000"
         android:layout_marginTop="10dp"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Budget vs. Actual Spending per Category"
+        style="@style/ChartTitleStyle"/>
+
     <!-- BarChart -->
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/categoriesBarChart"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Budget vs. Actual Spending per Month"
+        style="@style/ChartTitleStyle"/>
 
     <!-- BarChart -->
     <com.github.mikephil.charting.charts.BarChart

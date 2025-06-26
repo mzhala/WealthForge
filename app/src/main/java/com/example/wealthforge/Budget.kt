@@ -24,6 +24,7 @@ data class Budget(
     @ColumnInfo(name = "month")
     val month: String,  // 1 = January, 2 = February, etc.
 
+    val monthIndex: Int,
     @ColumnInfo(name = "year")
     val year: Int,
 

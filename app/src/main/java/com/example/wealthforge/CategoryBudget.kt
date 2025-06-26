@@ -21,7 +21,7 @@ data class CategoryBudget(
     val userId: Int,
 
     val category_name: String,
-
+    val monthIndex: Int,
     val year: Int,
     val month: String,
     val amount: Double,

@@ -8,6 +8,7 @@
     android:paddingLeft="0dp"
     android:paddingTop="0dp"
     android:paddingRight="0dp"
+    android:paddingBottom="5dp"
     tools:context=".RewardsFragment">
 
     <TextView

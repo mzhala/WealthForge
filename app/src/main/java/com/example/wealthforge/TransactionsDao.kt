@@ -26,7 +26,7 @@ interface TransactionsDao {
         year < :endYear 
         OR (year = :endYear AND monthIndex <= :endMonth)
       )
-    ORDER BY year, monthIndex, day
+    ORDER BY year desc, monthIndex desc, day desc
 """)
     suspend fun getTransactionsBetween(
         userId: Int,
@@ -35,6 +35,28 @@ interface TransactionsDao {
         endMonth: Int,
         endYear: Int
     ): List<Transactions>
+
+    @Query("""
+    SELECT SUM(amount) FROM transactions
+    WHERE user_id = :userId 
+      AND (
+        year > :startYear 
+        OR (year = :startYear AND monthIndex >= :startMonth)
+      )
+      AND (
+        year < :endYear 
+        OR (year = :endYear AND monthIndex <= :endMonth)
+      )
+    ORDER BY year desc, monthIndex desc, day desc
+""")
+    suspend fun getTransactionsBetweenTotal(
+        userId: Int,
+        startMonth: Int,
+        startYear: Int,
+        endMonth: Int,
+        endYear: Int
+    ): Double?
+
 
 
     @Query("SELECT * FROM transactions WHERE user_id = :userId ORDER BY year DESC, monthIndex DESC, day DESC")
@@ -60,19 +82,30 @@ interface TransactionsDao {
 
     @Query("""
     SELECT 
-        t.category_name AS category_name,
-        SUM(t.amount) AS total,
-        COALESCE(cb.amount, 0.0) AS budget
-    FROM transactions t
-    LEFT JOIN categoryBudget cb 
-        ON t.category_name = cb.category_name AND t.user_id = cb.user_id
-    WHERE t.user_id = :userId AND (
+    b.category_name AS category_name,
+    COALESCE(SUM(t.amount), 0.0) AS total,
+    b.total_budget AS budget
+FROM (
+    SELECT category_name, user_id, SUM(amount) AS total_budget
+    FROM categoryBudget
+    WHERE user_id = :userId
+      AND (
+          (year > :startYear OR (year = :startYear AND monthIndex >= :startMonthIndex)) AND
+          (year < :endYear OR (year = :endYear AND monthIndex <= :endMonthIndex))
+      )
+    GROUP BY category_name, user_id
+) AS b
+LEFT JOIN transactions t
+    ON b.category_name = t.category_name
+    AND b.user_id = t.user_id
+    AND (
         (t.year > :startYear OR (t.year = :startYear AND t.monthIndex >= :startMonthIndex)) AND
         (t.year < :endYear OR (t.year = :endYear AND t.monthIndex <= :endMonthIndex))
     )
-    GROUP BY t.category_name
-    ORDER BY total DESC
-""")
+GROUP BY b.category_name, b.total_budget
+ORDER BY total DESC
+
+    """)
     suspend fun getCategorySpendingWithBudgetInRange(
         userId: Int,
         startMonthIndex: Int,

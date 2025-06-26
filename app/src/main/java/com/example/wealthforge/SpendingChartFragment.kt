@@ -45,7 +45,7 @@ class SpendingChartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as? MainActivity)?.updateToolbarTitle("Spending by Category")
+        (activity as? MainActivity)?.updateToolbarTitle("Spending Charts")
 
         db = AppDatabase.getDatabase(requireContext())
         userViewModel = (activity as MainActivity).userViewModel

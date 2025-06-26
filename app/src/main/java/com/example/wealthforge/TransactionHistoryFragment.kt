@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -73,9 +74,11 @@ class TransactionHistoryFragment : Fragment() {
             val endMonthIndex = endMonthSpinner.selectedItemPosition
             val startYear = startYearSpinner.selectedItem.toString().toInt()
             val endYear = endYearSpinner.selectedItem.toString().toInt()
+            val totalTextView = view.findViewById<TextView>(R.id.transactionAmountTotal)
+
 
             if (userId != null) {
-                loadTransactions(userId, startMonthIndex, startYear, endMonthIndex, endYear, recyclerView)
+                loadTransactions(userId, startMonthIndex, startYear, endMonthIndex, endYear, recyclerView, totalTextView)
             }
         }
 
@@ -105,9 +108,14 @@ class TransactionHistoryFragment : Fragment() {
                                        startMonthIndex: Int,
                                        startYear: Int,
                                        endMonthIndex: Int,
-                                       endYear: Int,  recyclerView: RecyclerView) {
+                                       endYear: Int,
+                                        recyclerView: RecyclerView,
+                                        totalTextView: TextView
+    ) {
         lifecycleScope.launch {
             val transactions = db.transactionsDao().getTransactionsBetween(userId, startMonthIndex, startYear, endMonthIndex, endYear)
+            val total = db.transactionsDao().getTransactionsBetweenTotal(userId, startMonthIndex, startYear, endMonthIndex, endYear)
+
             val items = transactions.map {
                 TransactionRecordItem(
                     id = it.id,
@@ -122,10 +130,18 @@ class TransactionHistoryFragment : Fragment() {
                 recyclerView.adapter = TransactionRecordAdapter(items) { item ->
                     lifecycleScope.launch {
                         db.transactionsDao().deleteTransactionById(item.id)
-                        loadTransactions(userId, startMonthIndex, startYear, endMonthIndex, endYear, recyclerView) // Reload the list
+                        loadTransactions(userId, startMonthIndex, startYear, endMonthIndex, endYear, recyclerView, totalTextView) // Reload the list
                     }
                 }
             }
+
+            val formattedTotal = if (total != null) {
+                "R" + "%,d".format(total.toInt()) // Assumes Double or Int
+            } else {
+                "R0"
+            }
+
+            totalTextView.text = formattedTotal
         }
     }
 }
