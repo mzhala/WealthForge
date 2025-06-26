@@ -1,148 +1,18 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="0dp"
-    android:paddingTop="0dp"
-    android:paddingRight="0dp"
     tools:context=".BudgetFragment">
 
 
-    <!-- Budget Picker (Month, Year) -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="0dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Month"
-            style="@style/LabelStyle"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <Spinner
-            android:id="@+id/monthSpinner"
-            android:layout_width="86dp"
-            android:layout_height="match_parent"
-            android:paddingEnd="16dp"
-            style="@style/LabelStyle"/>
-
-        <Space
-            android:layout_width="12dp"
-            android:layout_height="match_parent" />
-
-        <Spinner
-            android:id="@+id/yearSpinner"
-            android:layout_width="86dp"
-            android:layout_height="match_parent"
-            android:paddingEnd="16dp"
-            style="@style/LabelStyle" />
-    </LinearLayout>
-
-    <!-- Budget Amount for Selected (Month, Year)-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="Budget Amount"
-            style="@style/LabelStyle"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <LinearLayout
-            android:layout_width="184dp"
-            android:layout_height="match_parent"
-            android:padding="1dp"
-            android:background="@drawable/linear_layout_border">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                style="@style/LabelStyle"
-                android:text="R" />
-
-            <EditText
-                android:id="@+id/budgetAmountInput"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-
-                android:hint="0"
-                android:inputType="number"
-                style="@style/Money"
-                android:background="@android:color/white" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- Set/Update Budget Amount Button for Selected (Month, Year)-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/setBudgetAmountButton"
-            style="@style/MyButtonStyle"
-            android:layout_width="184dp"
-            android:layout_height="match_parent"
-            android:text="Set Budget Amount" />
-
-    </LinearLayout>
-
-    <!-- Category Budget-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/black_card"
-        android:orientation="vertical">
-
-        <!-- Category Budget Card Header -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@drawable/black_card_header">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="Category Budget"
-                style="@style/CardTitleStyle" />
-
-        </LinearLayout>
-
-        <!-- Category Name -->
+        <!-- Budget Picker (Month, Year) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="25dp"
@@ -153,8 +23,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Category Name"
-                style="@style/CardLabelStyle" />
+                android:text="Month"
+                style="@style/LabelStyle"/>
 
             <View
                 android:layout_width="0dp"
@@ -162,10 +32,9 @@
                 android:layout_weight="1" />
 
             <Spinner
-                android:id="@+id/categorySpinner"
-                android:layout_width="184dp"
+                android:id="@+id/monthSpinner"
+                android:layout_width="86dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/spinner_background"
                 android:paddingEnd="16dp"
                 style="@style/LabelStyle"/>
 
@@ -173,9 +42,15 @@
                 android:layout_width="12dp"
                 android:layout_height="match_parent" />
 
+            <Spinner
+                android:id="@+id/yearSpinner"
+                android:layout_width="86dp"
+                android:layout_height="match_parent"
+                android:paddingEnd="16dp"
+                style="@style/LabelStyle" />
         </LinearLayout>
 
-        <!-- Category Limit Amount -->
+        <!-- Budget Amount for Selected (Month, Year)-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="25dp"
@@ -186,8 +61,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Limit Amount"
-                style="@style/CardLabelStyle" />
+                android:gravity="center_vertical"
+                android:text="Budget Amount"
+                style="@style/LabelStyle"/>
 
             <View
                 android:layout_width="0dp"
@@ -206,74 +82,201 @@
                     android:gravity="center_vertical"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:text="R"
-                    style="@style/LabelStyle" />
+                    style="@style/LabelStyle"
+                    android:text="R" />
 
                 <EditText
-                    android:id="@+id/categoryBudgetAmount"
+                    android:id="@+id/budgetAmountInput"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+
                     android:hint="0"
                     android:inputType="number"
-                    android:background="@android:color/white"
-                    style="@style/Money" />
+                    style="@style/Money"
+                    android:background="@android:color/white" />
+
             </LinearLayout>
 
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <!-- Set/Update Budget Amount Button for Selected (Month, Year)-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/setBudgetAmountButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="184dp"
+                android:layout_height="match_parent"
+                android:text="Set Budget Amount" />
 
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Category Budget-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/black_card"
+            android:orientation="vertical">
+
+            <!-- Category Budget Card Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/black_card_header">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Category Budget"
+                    style="@style/CardTitleStyle" />
+
+            </LinearLayout>
+
+            <!-- Category Name -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Category Name"
+                    style="@style/CardLabelStyle" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/categorySpinner"
+                    android:layout_width="184dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/spinner_background"
+                    android:paddingEnd="16dp"
+                    style="@style/LabelStyle"/>
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <!-- Category Limit Amount -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Limit Amount"
+                    style="@style/CardLabelStyle" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="184dp"
+                    android:layout_height="match_parent"
+                    android:padding="1dp"
+                    android:background="@drawable/linear_layout_border">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="R"
+                        style="@style/LabelStyle" />
+
+                    <EditText
+                        android:id="@+id/categoryBudgetAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="0"
+                        android:inputType="number"
+                        android:background="@android:color/white"
+                        style="@style/Money" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text=": "
+                style="@style/LabelStyle"
+                android:id="@+id/categories_total"/>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+        </LinearLayout>
+        <!-- Add Category to budget -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/addCategoryToBudgetButton"
+                style="@style/MyButtonStyle"
+                android:layout_width="184dp"
+                android:layout_height="match_parent"
+                android:text="Add To Budget" />
+
+        </LinearLayout>
+
+
+        <!-- Categories on budget -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text=": "
-            style="@style/LabelStyle"
-            android:id="@+id/categories_total"/>
-
-        <View
-            android:layout_width="10dp"
-            android:layout_height="0dp" />
-
-    </LinearLayout>
-    <!-- Add Category to budget -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/addCategoryToBudgetButton"
-            style="@style/MyButtonStyle"
-            android:layout_width="184dp"
-            android:layout_height="match_parent"
-            android:text="Add To Budget" />
-
+            android:layout_marginTop="20dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            />
     </LinearLayout>
 
-
-    <!-- Categories on budget -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        android:layout_weight="1"/>
-
-</LinearLayout>
+</ScrollView>
