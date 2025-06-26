@@ -27,21 +27,17 @@
             android:title="@string/menu_transaction_history" />
         <item
             android:id="@+id/nav_spending_by_category"
-            android:icon="@drawable/ic_transaction_history"
+            android:icon="@drawable/ic_spending_by_category"
             android:title="@string/menu_spending_by_category" />
         <item
             android:id="@+id/nav_spending_chart"
-            android:icon="@drawable/ic_transaction_history"
+            android:icon="@drawable/ic_spending_trends"
             android:title="@string/menu_spending_chart" />
 
         <item
             android:id="@+id/nav_rewards"
             android:icon="@drawable/ic_rewards"
             android:title="@string/menu_rewards" />
-
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_profile"
-            android:title="@string/menu_profile" />
+        
     </group>
 </menu>

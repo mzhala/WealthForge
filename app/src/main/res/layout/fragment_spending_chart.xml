@@ -97,7 +97,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Budget vs. Actual Spending per Category"
+        android:text="Category Limits vs. Actual Spending per Category"
         style="@style/ChartTitleStyle"/>
 
     <!-- BarChart -->
@@ -109,7 +109,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Budget vs. Actual Spending per Month"
+        android:text="Monthly Goal vs Actual Spending"
         style="@style/ChartTitleStyle"/>
 
     <!-- BarChart -->
@@ -117,6 +117,21 @@
         android:id="@+id/monthlyBarChart"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Date"
+            style="@style/LabelStyle"
+            android:id="@+id/summary"/>
+    </LinearLayout>
 
 
 </LinearLayout>

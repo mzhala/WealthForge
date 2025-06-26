@@ -133,7 +133,7 @@ class SpendingByCategoryFragment : Fragment() {
                     name = it.category_name,
                     budgetAmount = "R" + "%,d".format((it.budget ?: 0.0).toInt()).replace(',', ' '),
                     spentAmount = "R" + "%,d".format((it.total ?: 0.0).toInt()).replace(',', ' '),
-                    iconResId = R.drawable.ic_categories
+                    iconResId = it.iconResId ?: R.drawable.ic_categories
                 )
             }
 

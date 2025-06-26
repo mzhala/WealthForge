@@ -82,30 +82,36 @@ interface TransactionsDao {
 
     @Query("""
     SELECT 
-    b.category_name AS category_name,
-    COALESCE(SUM(t.amount), 0.0) AS total,
-    b.total_budget AS budget
+    cb.category_name AS category_name,
+    COALESCE(t.total_spent, 0.0) AS total,
+    cb.total_budget AS budget,
+    cb.iconResId AS iconResId
 FROM (
-    SELECT category_name, user_id, SUM(amount) AS total_budget
+    SELECT category_name, user_id, SUM(amount) AS total_budget, iconResId
     FROM categoryBudget
     WHERE user_id = :userId
       AND (
-          (year > :startYear OR (year = :startYear AND monthIndex >= :startMonthIndex)) AND
+          (year > :startYear OR (year = :startYear AND monthIndex >= :startMonthIndex))
+          AND
+          (year < :endYear OR (year = :endYear AND monthIndex <= :endMonthIndex))
+      )
+    GROUP BY category_name, user_id, iconResId
+) cb
+LEFT JOIN (
+    SELECT category_name, user_id, SUM(amount) AS total_spent
+    FROM transactions
+    WHERE user_id = :userId
+      AND (
+          (year > :startYear OR (year = :startYear AND monthIndex >= :startMonthIndex))
+          AND
           (year < :endYear OR (year = :endYear AND monthIndex <= :endMonthIndex))
       )
     GROUP BY category_name, user_id
-) AS b
-LEFT JOIN transactions t
-    ON b.category_name = t.category_name
-    AND b.user_id = t.user_id
-    AND (
-        (t.year > :startYear OR (t.year = :startYear AND t.monthIndex >= :startMonthIndex)) AND
-        (t.year < :endYear OR (t.year = :endYear AND t.monthIndex <= :endMonthIndex))
-    )
-GROUP BY b.category_name, b.total_budget
+) t
+ON cb.category_name = t.category_name AND cb.user_id = t.user_id
 ORDER BY total DESC
 
-    """)
+""")
     suspend fun getCategorySpendingWithBudgetInRange(
         userId: Int,
         startMonthIndex: Int,
@@ -113,6 +119,7 @@ ORDER BY total DESC
         endMonthIndex: Int,
         endYear: Int
     ): List<CategorySpending>
+
 
     @Query("SELECT DISTINCT month, year FROM transactions WHERE user_id = :userId")
     fun getDistinctMonthYear(userId: Int): List<DistinctMonthYear>

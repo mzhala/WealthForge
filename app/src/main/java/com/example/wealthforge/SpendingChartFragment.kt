@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -45,7 +46,7 @@ class SpendingChartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as? MainActivity)?.updateToolbarTitle("Spending Charts")
+        (activity as? MainActivity)?.updateToolbarTitle("Spending Trends")
 
         db = AppDatabase.getDatabase(requireContext())
         userViewModel = (activity as MainActivity).userViewModel
@@ -77,9 +78,9 @@ class SpendingChartFragment : Fragment() {
             val endMonthIndex = endMonthSpinner.selectedItemPosition
             val startYear = startYearSpinner.selectedItem.toString().toInt()
             val endYear = endYearSpinner.selectedItem.toString().toInt()
-
+            val summary = view.findViewById<TextView>(R.id.summary)
             if (userId != null) {
-                loadTransactions(userId, startMonthIndex, startYear, endMonthIndex, endYear)
+                loadTransactions(userId, startMonthIndex, startYear, endMonthIndex, endYear, summary)
             }
         }
 
@@ -106,7 +107,8 @@ class SpendingChartFragment : Fragment() {
         startMonthIndex: Int,
         startYear: Int,
         endMonthIndex: Int,
-        endYear: Int
+        endYear: Int,
+        summary: TextView
     ) {
         lifecycleScope.launch {
             val categoryTotals = db.transactionsDao()
@@ -163,9 +165,45 @@ class SpendingChartFragment : Fragment() {
                 barChart.setFitBars(true)
                 barChart.invalidate()
 
-
                 // Load monthly totals after categories
                 loadMonthlyTotals(userId, startMonthIndex, startYear, endMonthIndex, endYear)
+
+                val budgetTotalRaw = db.categoryBudgetDao().getCategoryBudgetTotalInRange(userId, startMonthIndex, startYear, endMonthIndex, endYear)
+                val spentTotalRaw = db.transactionsDao().getTransactionsBetweenTotal(userId, startMonthIndex, startYear, endMonthIndex, endYear)
+
+                val budgetTotal = budgetTotalRaw ?: 0.0
+                val spentTotal = spentTotalRaw ?: 0.0
+
+                val summaryText = StringBuilder()
+
+                if (budgetTotal != null && spentTotal != null) {
+                    if (spentTotal < budgetTotal) {
+                        val diff = budgetTotal - spentTotal
+                        if (spentTotal < budgetTotal) {
+                            val diff = budgetTotal - spentTotal
+                            summaryText.append("\uD83D\uDE0A You set category budgets totaling R${"%.2f".format(budgetTotal)} and spent R${"%.2f".format(spentTotal)} — great job saving R${"%.2f".format(diff)} across your categories!")
+                        } else if (spentTotal > budgetTotal) {
+                            val diff = spentTotal - budgetTotal
+                            summaryText.append("\uD83D\uDE25 Your spending exceeded the category budgets by R${"%.2f".format(diff)} (Spent: R${"%.2f".format(spentTotal)}, Budgeted: R${"%.2f".format(budgetTotal)}). Consider reviewing your categories to stay on track.")
+                        } else {
+                            summaryText.append("\uD83D\uDE0E You perfectly matched your category budgets with actual spending at R${"%.2f".format(budgetTotal)} — well done!")
+                        }
+
+                    }
+
+                    // Add overspending category
+                    val overspendingCategory = categoryTotals
+                        .filter { it.budget > 0 && it.total > it.budget }
+                        .maxByOrNull { it.total - it.budget }
+
+                    if (overspendingCategory != null) {
+                        val percentOver = ((overspendingCategory.total - overspendingCategory.budget) / overspendingCategory.budget) * 100
+                        summaryText.append("\n⚠️ You overspent most in '${overspendingCategory.category_name}' - ${"%.1f".format(percentOver)}% over budget.")
+                    }
+
+                    summary.text = summaryText.toString()
+                }
+
             }
         }
     }

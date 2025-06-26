@@ -45,21 +45,25 @@ interface BudgetDao {
     @Query("""
     SELECT
         b.year,
-        b.monthIndex as month_num,
-        COALESCE(SUM(b.amount), 0) as budget,
-        COALESCE(SUM(t.amount), 0) as spent
-    FROM budget b
+        b.monthIndex AS month_num,
+        b.amount AS budget,
+        COALESCE(SUM(t.amount), 0) AS spent
+    FROM (
+        SELECT user_id, year, monthIndex, SUM(amount) AS amount
+        FROM budget
+        WHERE user_id = :userId
+          AND (
+            (year > :startYear OR (year = :startYear AND monthIndex >= :startMonth))
+            AND
+            (year < :endYear OR (year = :endYear AND monthIndex <= :endMonth))
+          )
+        GROUP BY user_id, year, monthIndex
+    ) b
     LEFT JOIN transactions t
       ON b.user_id = t.user_id
       AND b.year = t.year
       AND b.monthIndex = t.monthIndex
-    WHERE b.user_id = :userId
-      AND (
-        (b.year > :startYear OR (b.year = :startYear AND b.monthIndex >= :startMonth))
-        AND
-        (b.year < :endYear OR (b.year = :endYear AND b.monthIndex <= :endMonth))
-      )
-    GROUP BY b.year, b.monthIndex
+    GROUP BY b.year, b.monthIndex, b.amount
     ORDER BY b.year, b.monthIndex
 """)
     fun getMonthlyTotals(
@@ -69,6 +73,7 @@ interface BudgetDao {
         endMonth: Int,
         endYear: Int
     ): List<MonthlyTotal>
+
 
 
 

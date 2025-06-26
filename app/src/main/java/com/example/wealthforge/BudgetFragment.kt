@@ -208,6 +208,7 @@ class BudgetFragment : Fragment() {
                 val existing = db.categoryBudgetDao()
                     .getCategoryBudget(userId, category_name, year, month)
 
+                val iconId = db.categoryDao().getCategoryIcon(userId, category_name)
                 val categoryBudget = if (existing != null) {
                     existing.copy(amount = amount, monthIndex = monthIndex) // update the amount, preserve id
                 } else {
@@ -217,7 +218,7 @@ class BudgetFragment : Fragment() {
                         year = year,
                         month = month,
                         amount = amount,
-                        iconResId = R.drawable.ic_categories,
+                        iconResId = iconId,
                         monthIndex = monthIndex,
                     )
                 }

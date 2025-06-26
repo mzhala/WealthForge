@@ -25,6 +25,7 @@ class HomeFragment : Fragment() {
     private lateinit var db: AppDatabase
     private lateinit var recyclerView: RecyclerView
     private lateinit var userViewModel: UserViewModel
+    private var dailyTipShown = false
 
 
     override fun onCreateView(
@@ -71,11 +72,24 @@ class HomeFragment : Fragment() {
 
 
     private fun showDailyTipDialog() {
+        if (dailyTipShown) return
+        dailyTipShown = true
+
         val tips = listOf(
             "Track your spending daily to build better habits!",
             "You're one step closer to your goals – keep going!",
             "Small savings today lead to big wins tomorrow.",
-            "Budgeting is the first step toward financial freedom."
+            "Budgeting is the first step toward financial freedom.",
+            "Review your budget regularly to stay on track.",
+            "Avoid impulse purchases by waiting 24 hours before buying.",
+            "Set clear financial goals to motivate your saving.",
+            "Use cash envelopes for better control over spending.",
+            "Automate your savings to build your emergency fund.",
+            "Cut down on small daily expenses; they add up quickly.",
+            "Compare prices before making big purchases.",
+            "Keep track of subscriptions and cancel what you don’t use.",
+            "Plan meals ahead to save money on groceries.",
+            "Use apps to monitor your credit score and finances."
         )
 
         val randomTip = tips.random()
@@ -88,6 +102,7 @@ class HomeFragment : Fragment() {
             }
             .show()
     }
+
 
     private fun showCurrentMonthBudget(userId: Int) {
         val textView = view?.findViewById<TextView>(R.id.budgetAmount) ?: return
