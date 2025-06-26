@@ -74,10 +74,8 @@ interface TransactionsDao {
         endYear: Int
     ): List<CategorySpending>
 
-
-
-
-
+    @Query("SELECT DISTINCT month, year FROM transactions WHERE user_id = :userId")
+    fun getDistinctMonthYear(userId: Int): List<DistinctMonthYear>
 
     @Query("DELETE FROM transactions WHERE id = :transactionId")
     suspend fun deleteTransactionById(transactionId: Int)

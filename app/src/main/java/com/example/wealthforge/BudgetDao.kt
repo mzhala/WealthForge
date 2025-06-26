@@ -100,4 +100,10 @@ ORDER BY
         endMonth: Int,
         endYear: Int
     ): List<MonthlyTotal>
+
+    @Query("SELECT DISTINCT month, year FROM budget WHERE user_id = :userId")
+    fun getDistinctMonthYear(userId: Int): List<DistinctMonthYear>
+
+
+
 }
