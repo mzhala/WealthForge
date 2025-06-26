@@ -42,6 +42,12 @@
         tools:layout="@layout/fragment_spending_by_category" />
 
     <fragment
+        android:id="@+id/nav_spending_chart"
+        android:name="com.example.wealthforge.SpendingChartFragment"
+        android:label="@string/menu_spending_chart"
+        tools:layout="@layout/fragment_spending_chart" />
+
+    <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.wealthforge.ProfileFragment"
         android:label="@string/menu_profile"

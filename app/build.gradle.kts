@@ -63,4 +63,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 }

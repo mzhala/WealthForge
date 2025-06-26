@@ -30,6 +30,10 @@
             android:icon="@drawable/ic_transaction_history"
             android:title="@string/menu_spending_by_category" />
         <item
+            android:id="@+id/nav_spending_chart"
+            android:icon="@drawable/ic_transaction_history"
+            android:title="@string/menu_spending_chart" />
+        <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
             android:title="@string/menu_profile" />
