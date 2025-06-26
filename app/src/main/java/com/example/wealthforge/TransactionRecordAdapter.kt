@@ -65,35 +65,23 @@ class TransactionRecordAdapter(
         category.text = "Category: ${item.name}"
         amount.text = "Amount: ${item.amount}"
         date.text = "Date: ${item.date}"
-        /*description.text = "Description: ${item.description ?: "N/A"}"*/
+        description.text = "Description: ${item.description ?: "N/A"}"
 
-        if (!item.receiptUri.isNullOrEmpty()) {
-            val resolver = context.contentResolver
-            val uri = Uri.parse(item.receiptUri)
-
+        if (!item.receiptUri.isNullOrBlank()) {
             try {
-                val source = ImageDecoder.createSource(resolver, uri)
+                val uri = Uri.parse(item.receiptUri)
+                val source = ImageDecoder.createSource(context.contentResolver, uri)
                 val bitmap = ImageDecoder.decodeBitmap(source)
                 receiptImage.setImageBitmap(bitmap)
             } catch (e: Exception) {
-                receiptImage.setImageResource(R.drawable.ic_no_receipt)
                 e.printStackTrace()
+                receiptImage.setImageResource(R.drawable.ic_no_receipt)
             }
-
         } else {
-            val resolver = context.contentResolver
-            val uri = Uri.parse(item.receiptUri)
-
-            try {
-                val source = ImageDecoder.createSource(resolver, uri)
-                val bitmap = ImageDecoder.decodeBitmap(source)
-                receiptImage.setImageBitmap(bitmap)
-            } catch (e: Exception) {
-                receiptImage.setImageResource(R.drawable.ic_no_receipt)
-                e.printStackTrace()
-            }
-
+            // Fallback image if receiptUri is null or blank
+            receiptImage.setImageResource(R.drawable.ic_no_receipt)
         }
+
 
         AlertDialog.Builder(context)
             .setTitle("Transaction Details")

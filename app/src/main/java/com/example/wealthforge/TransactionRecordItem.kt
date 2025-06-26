@@ -6,5 +6,6 @@ data class TransactionRecordItem(
     val date: String,
     val amount: String,
     val iconResId: Int,
-    val receiptUri: String?
+    val receiptUri: String?,
+    val description: String
 )

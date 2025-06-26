@@ -179,12 +179,13 @@
 
                 <EditText
                     android:id="@+id/limitAmountInput"
-                    style="@style/Money"
-                    android:layout_width="match_parent"
+                    android:layout_width="140dp"
                     android:layout_height="match_parent"
-                    android:background="@android:color/white"
                     android:hint="0"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:imeOptions="actionDone"
+                    android:background="@android:color/white"
+                    style="@style/Money" />
             </LinearLayout>
 
             <Space

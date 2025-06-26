@@ -164,7 +164,8 @@ class HomeFragment : Fragment() {
                     date = "${it.day} ${it.month} ${it.year} ${it.description}",
                     amount = "R${"%.2f".format(it.amount)}",
                     iconResId = it.iconResId ?: R.drawable.ic_categories,
-                    receiptUri = it.receipt
+                    receiptUri = it.receipt,
+                    description = it.description
                 )
             }.toMutableList()
 

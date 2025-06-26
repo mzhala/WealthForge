@@ -21,4 +21,9 @@ interface UserDao {
     // Update an existing user
     @Update
     suspend fun updateUser(user: User)
+
+    @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
+    suspend fun getUserByUsername(username: String): User?
+
+
 }
