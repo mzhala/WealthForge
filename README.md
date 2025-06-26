@@ -64,6 +64,41 @@ Install the necessary dependencies:
 
 Run the app on your Android device or emulator.
 
+# Final POE 
+
+## Implementation of Lecturer's Feedback
+
+Linked all activities/fragments to the database
+
+## Updated Features
+
+### Budget vs. Actual Spending Charts
+- Budget vs. Actual Spending (Per Category): Displays how much was budgeted vs. spent for each category over a selected date range.
+- Budget vs. Actual Spending (Per Month): Visualizes overall monthly budgets compared to actual expenses.
+
+### Fixed Budget Calculation Issue
+- Budget values now correctly reflect the intended amount, even if multiple transactions exist for the same category and month.
+- Prevents incorrect duplication of budget totals.
+
+## New Features
+
+### Expense Summary Improvements
+- The budget summary now clearly explains whether the user saved, overspent, or matched their budget.
+- Highlights the highest overspending category with its overspend percentage.
+- All currency values are formatted with thousands separators for better readability (e.g. `R1 234.56`).
+
+### Password Reset Functionality
+- Users who forget their password can reset it by providing their username and choosing a new password.
+
+### Tips Popup on Sign-In:**  
+  After signing in, users are greeted with a helpful popup that provides financial tips and app usage guidance to promote better money management habits.
+
+### Transaction Details Dialog:**  
+  Each transaction can now be viewed in detail, including the full date, category, description, amount, and uploaded receipt image.
+
+### Total Spending Display:**  
+  Total spending amounts are now shown at the bottom of the **Transaction History** and **Spending by Category** pages, giving users quick insight into their overall expenses.
+  
 ## Contributors
 
 ST10355256 Halalisile Mzobe 
@@ -80,4 +115,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Demo Video
 
-https://youtu.be/AhU5-p9fCsc 
+https://youtu.be/0b8GmuzJoW0
