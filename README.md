@@ -82,16 +82,19 @@ Linked all activities/fragments to the database
 
 ## New Features
 
+### Tips Popup on Sign-In:**  
+  After signing in, users are greeted with a helpful popup that provides financial tips and app usage guidance to promote better money management habits.
+
 ### Expense Summary Improvements
 - The budget summary now clearly explains whether the user saved, overspent, or matched their budget.
 - Highlights the highest overspending category with its overspend percentage.
 - All currency values are formatted with thousands separators for better readability (e.g. `R1 234.56`).
 
+### Recurring expenses/goals 
+- Users can now mark categories as recurring. When a new monthly budget is created, all recurring categories are automatically added to the category budget for that month.
+
 ### Password Reset Functionality
 - Users who forget their password can reset it by providing their username and choosing a new password.
-
-### Tips Popup on Sign-In:**  
-  After signing in, users are greeted with a helpful popup that provides financial tips and app usage guidance to promote better money management habits.
 
 ### Transaction Details Dialog:**  
   Each transaction can now be viewed in detail, including the full date, category, description, amount, and uploaded receipt image.
@@ -117,4 +120,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 The demo was screen recorded from an android phone.
 
-https://youtu.be/0b8GmuzJoW0
+https://youtu.be/-qCVHYG1OAM 
