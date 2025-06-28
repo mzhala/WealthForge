@@ -57,20 +57,29 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:text="Expenses"
                 style="@style/LabelStyle"
                 android:textAlignment="center"
                 android:gravity="center"/>
 
             <TextView
+                android:id="@+id/expenseAmount"
                 style="@style/Money_Semi_Bold"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:gravity="center"
                 android:text="R1 235"
-                android:textAlignment="center"
-                android:id="@+id/expenseAmount"/>
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/expenseAmountBudget"
+                style="@style/Money_Semi_Bold"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:paddingRight="10dp"
+                android:text="R1 235"
+                android:textAlignment="viewEnd"
+                android:textSize="12dp" />
         </LinearLayout>
 
         <Space
@@ -88,7 +97,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:text="Goals"
                 style="@style/LabelStyle"
                 android:textAlignment="center"
@@ -102,6 +111,16 @@
                 android:text="R500"
                 android:textAlignment="center"
                 android:id="@+id/goalAmount"/>
+
+            <TextView
+                android:id="@+id/goalAmountBudget"
+                style="@style/Money_Semi_Bold"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:paddingRight="10dp"
+                android:text="R1 235"
+                android:textAlignment="viewEnd"
+                android:textSize="12dp" />
         </LinearLayout>
     </LinearLayout>
 

@@ -57,7 +57,7 @@
     </style>
 
     <style name="CardTitleStyle">
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">#F5F5F5</item>
         <item name="android:textSize">14sp</item>
         <item name="android:paddingStart">10dp</item>
         <item name="android:fontFamily">@font/inter</item>

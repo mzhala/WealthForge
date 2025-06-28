@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         // Setup toolbar custom views
         val titleTextView: TextView = binding.appBarMain.toolbar.findViewById(R.id.toolbar_title)
         val iconMenu: ImageView = binding.appBarMain.toolbar.findViewById(R.id.icon_menu)
-        val iconProfile: ImageView = binding.appBarMain.toolbar.findViewById(R.id.icon_profile)
+        //val iconProfile: ImageView = binding.appBarMain.toolbar.findViewById(R.id.icon_profile)
 
         // If the userId is valid, proceed with fetching the username
         if (userId != -1) {
@@ -91,9 +91,6 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        iconProfile.setOnClickListener {
-            Snackbar.make(it, "Profile clicked", Snackbar.LENGTH_SHORT).show()
-        }
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView

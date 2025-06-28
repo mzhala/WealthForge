@@ -67,14 +67,21 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"/>
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Jackie Malinga"
-                            android:fontFamily="@font/inter"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
-                            android:id="@+id/username"/>
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jackie Malinga"
+                                android:fontFamily="@font/inter"
+                                android:textStyle="bold"
+                                android:textSize="14sp"
+                                android:id="@+id/username"/>
+
+
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -89,14 +96,7 @@
                     </LinearLayout>
 
                     <!-- Profile Picture -->
-                    <ImageView
-                        android:id="@+id/icon_profile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/u0001_profile_picture"
-                        android:contentDescription="Profile"
-                        android:paddingTop="1dp"
-                        android:paddingBottom="1dp"/>
+
 
                 </LinearLayout>
                 <LinearLayout

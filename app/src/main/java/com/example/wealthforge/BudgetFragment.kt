@@ -157,6 +157,25 @@ class BudgetFragment : Fragment() {
                 if (db.budgetDao().checkBudgetExists(userId, month, year) == 0) {
                     db.budgetDao().insertBudget(budget)
                     Toast.makeText(context, "Budget Added", Toast.LENGTH_SHORT).show()
+                    // Insert recurring categories into CategoryBudget
+                    val recurringCategories = db.categoryDao().getRecurringCategories(userId)
+                    for (category in recurringCategories) {
+                        val exists = db.categoryBudgetDao().checkCategoryBudgetExists(userId, category.categoryName, year, month)
+                        if (exists == 0) {
+                            val categoryBudget = CategoryBudget(
+                                userId = userId,
+                                category_name = category.categoryName,
+                                year = year,
+                                month = month,
+                                amount = category.amount,
+                                iconResId = category.iconResId,
+                                monthIndex = monthIndex
+                            )
+                            db.categoryBudgetDao().insertCategoryBudget(categoryBudget)
+                        }
+                    }
+                    // Refresh recycler view immediately
+                    loadBudgetItems()
                 } else {
                     db.budgetDao().updateBudget(budget)
                     Toast.makeText(context, "Budget Updated", Toast.LENGTH_SHORT).show()
@@ -229,6 +248,8 @@ class BudgetFragment : Fragment() {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(context, "Category Budget Added", Toast.LENGTH_SHORT).show()
                         loadBudgetItems()
+
+
                     }
                 } else {
                     db.categoryBudgetDao().updateCategoryBudget(categoryBudget)
@@ -288,11 +309,7 @@ class BudgetFragment : Fragment() {
                 }
             }
             val total: Double? = db.categoryBudgetDao().getTotalCategoryBudgetCountByUser(userId, year, month)
-            totalTextView?.text = "Total: R${"%.2f".format(total ?: 0.0)}"
-
-
+            totalTextView?.text = "Minimum Budget Total: R${"%.2f".format(total ?: 0.0)}"
         }
     }
-
-
     }

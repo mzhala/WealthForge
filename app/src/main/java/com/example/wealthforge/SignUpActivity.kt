@@ -25,6 +25,16 @@ class SignUpActivity : AppCompatActivity() {
         val confirmPasswordInput = findViewById<EditText>(R.id.connfirmPassword)
         val signUpButton = findViewById<Button>(R.id.signUpButton)
 
+        findViewById<Button>(R.id.forgottenPasswordButton).setOnClickListener {
+            val intent = Intent(this, ResetPasswordActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.signInButton).setOnClickListener {
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+        }
+
         signUpButton.setOnClickListener {
             val username = usernameInput.text.toString().trim()
             val password = passwordInput.text.toString()

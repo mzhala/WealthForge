@@ -133,10 +133,10 @@ class SpendingChartFragment : Fragment() {
                 }
 
                 val spentSet = BarDataSet(entriesSpent, "Spent")
-                spentSet.color = resources.getColor(R.color.teal_200, null)
+                spentSet.color = resources.getColor(R.color.teal_700, null)
 
                 val budgetSet = BarDataSet(entriesBudget, "Budget")
-                budgetSet.color = resources.getColor(R.color.green, null)
+                budgetSet.color = resources.getColor(R.color.light_grey, null)
 
                 val groupSpace = 0.2f
                 val barSpace = 0.02f
@@ -181,12 +181,12 @@ class SpendingChartFragment : Fragment() {
                         val diff = budgetTotal - spentTotal
                         if (spentTotal < budgetTotal) {
                             val diff = budgetTotal - spentTotal
-                            summaryText.append("\uD83D\uDE0A You set category budgets totaling R${"%.2f".format(budgetTotal)} and spent R${"%.2f".format(spentTotal)} — great job saving R${"%.2f".format(diff)} across your categories!")
+                            summaryText.append("\uD83D\uDE0A You set category budgets totaling R${"%.2f".format(budgetTotal)} and spent R${"%.2f".format(spentTotal)} - great job saving R${"%.2f".format(diff)} across your categories!")
                         } else if (spentTotal > budgetTotal) {
                             val diff = spentTotal - budgetTotal
                             summaryText.append("\uD83D\uDE25 Your spending exceeded the category budgets by R${"%.2f".format(diff)} (Spent: R${"%.2f".format(spentTotal)}, Budgeted: R${"%.2f".format(budgetTotal)}). Consider reviewing your categories to stay on track.")
                         } else {
-                            summaryText.append("\uD83D\uDE0E You perfectly matched your category budgets with actual spending at R${"%.2f".format(budgetTotal)} — well done!")
+                            summaryText.append("\uD83D\uDE0E You perfectly matched your category budgets with actual spending at R${"%.2f".format(budgetTotal)} - well done!")
                         }
 
                     }
@@ -230,27 +230,33 @@ class SpendingChartFragment : Fragment() {
 
                 val entriesSpent = ArrayList<BarEntry>()
                 val entriesBudget = ArrayList<BarEntry>()
+                val entriesCategoryBudget = ArrayList<BarEntry>()
                 val labels = ArrayList<String>()
 
                 monthlyTotals.forEachIndexed { index, it ->
                     entriesSpent.add(BarEntry(index.toFloat(), it.spent.toFloat()))
+                    entriesCategoryBudget.add(BarEntry(index.toFloat(), it.category_budget_total.toFloat()))
                     entriesBudget.add(BarEntry(index.toFloat(), it.budget.toFloat()))
+
                     labels.add("${months[it.month_num]} ${it.year}")
                 }
 
                 val spentSet = BarDataSet(entriesSpent, "Spent")
                 spentSet.color = resources.getColor(R.color.teal_700, null)
 
-                val budgetSet = BarDataSet(entriesBudget, "Budget")
-                budgetSet.color = resources.getColor(R.color.green, null)
+                val budgetSet = BarDataSet(entriesBudget, "Budget Max")
+                budgetSet.color = resources.getColor(R.color.grey, null)
 
-                val groupSpace = 0.2f
+                val categoryBudgetSet = BarDataSet(entriesCategoryBudget, "Budget Min")
+                categoryBudgetSet.color = resources.getColor(R.color.light_grey, null)
+
+                val groupSpace = 0.3f
                 val barSpace = 0.02f
-                val barWidth = 0.4f
+                val barWidth = 0.2f
 
                 val groupCount = labels.size
 
-                val data = BarData(spentSet, budgetSet)
+                val data = BarData(spentSet, categoryBudgetSet, budgetSet)
                 data.barWidth = barWidth
 
                 barChart.data = data
@@ -261,19 +267,15 @@ class SpendingChartFragment : Fragment() {
                 xAxis.position = com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM
                 xAxis.setCenterAxisLabels(true)
 
-// Set axis min and max for grouped bars so they fit well
                 xAxis.axisMinimum = 0f
                 xAxis.axisMaximum = 0f + data.getGroupWidth(groupSpace, barSpace) * groupCount
 
-// Group the bars starting at x=0f with groupSpace and barSpace
                 barChart.groupBars(0f, groupSpace, barSpace)
-
-                barChart.setFitBars(true)
                 barChart.invalidate()
-
             }
         }
     }
+
 
 
 }

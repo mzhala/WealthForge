@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Space
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wealthforge.R
 
-class CategoryAdapter(private val items: MutableList<CategoryItem>, private val onDelete: (CategoryItem) -> Unit) :
-    RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(
+    private val items: MutableList<CategoryItem>,
+    private val onDelete: (CategoryItem) -> Unit
+) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)
@@ -17,6 +19,7 @@ class CategoryAdapter(private val items: MutableList<CategoryItem>, private val 
         val categoryType: TextView = view.findViewById(R.id.categoryType)
         val recurringAmount: TextView = view.findViewById(R.id.recurringAmount)
         val deleteButton: ImageView = view.findViewById(R.id.deleteButton)
+        val recurringIcon: ImageView = view.findViewById(R.id.recurring) // Make sure the ID matches your XML
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,21 +35,24 @@ class CategoryAdapter(private val items: MutableList<CategoryItem>, private val 
         holder.categoryType.text = item.categoryType
         holder.recurringAmount.text = item.recurringAmount
 
-        // Handle delete button click
+        // Show/hide the recurring icon
+        if (item.recurring) {
+            holder.recurringIcon.visibility = View.VISIBLE
+            holder.recurringAmount.visibility = View.VISIBLE
+        } else {
+            holder.recurringIcon.visibility = View.GONE
+            holder.recurringAmount.visibility = View.GONE
+        }
+
         holder.deleteButton.setOnClickListener {
-            onDelete(item)  // Invoke the delete action provided by the fragment
-            // Optionally remove the item from the list and notify the adapter
+            onDelete(item)
             val index = items.indexOf(item)
             if (index != -1) {
                 items.removeAt(index)
                 notifyItemRemoved(index)
             }
-
         }
     }
 
     override fun getItemCount(): Int = items.size
-
-
 }
-

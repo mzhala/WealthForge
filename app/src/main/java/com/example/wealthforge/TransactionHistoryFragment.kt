@@ -120,11 +120,12 @@ class TransactionHistoryFragment : Fragment() {
                 TransactionRecordItem(
                     id = it.id,
                     name = it.categoryName,
-                    date = "${it.day} ${it.month} ${it.year} ${it.description}",
+                    date = "${it.day} ${it.month} ${it.year}",
                     amount = "R${"%.2f".format(it.amount)}",
                     iconResId = it.iconResId ?: R.drawable.ic_categories,
                     receiptUri = it.receipt,
-                    description = it.description
+                    description = it.description,
+                    subtext = "${it.day} ${it.month} ${it.year} ${it.description}"
 
                 )
             }.toMutableList()

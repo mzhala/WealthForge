@@ -132,7 +132,8 @@ class CategoriesFragment : Fragment() {
                     name = it.categoryName,
                     categoryType = it.type,
                     recurringAmount = "R${it.amount}",
-                    iconResId = it.iconResId ?: R.drawable.ic_categories
+                    iconResId = it.iconResId ?: R.drawable.ic_categories,
+                    recurring = it.recurring
                 )
             }
 

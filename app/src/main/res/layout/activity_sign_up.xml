@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/logo" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="340dp"
+        android:layout_height="350dp"
         android:layout_marginTop="20dp"
         android:padding="30dp"
         android:background="@drawable/linear_layout_border"
@@ -101,9 +101,9 @@
             android:id="@+id/forgottenPasswordButton"
             style="@style/WhiteButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:text="Forgot your password?"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:background="@drawable/button_no_background"
             />
 
@@ -116,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:text="Already have an account?"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 style="@style/LabelStyle"/>
 
             <Button
@@ -125,10 +125,10 @@
                 android:layout_width="42dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/button_no_background"
-                android:fontFamily="@font/inter"
+                android:fontFamily="@font/inter_semi_bold"
                 android:text="Sign In"
                 android:textColor="#0E14B7"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>

@@ -4,5 +4,6 @@ data class MonthlyTotal(
     val year: Int,
     val month_num: Int,
     val budget: Double,
-    val spent: Double
+    val spent: Double,
+    val category_budget_total: Double
 )

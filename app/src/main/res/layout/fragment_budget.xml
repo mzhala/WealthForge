@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="Set Selected Month Budget"
+                    android:text="Set Selected Maximum Month Budget"
                     style="@style/CardTitleStyle" />
 
             </LinearLayout>
@@ -281,6 +281,17 @@
                 android:text="Add To Budget" />
 
         </LinearLayout>
+
+        <!-- Categories on budget -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -300,18 +311,7 @@
                 android:layout_height="0dp" />
 
         </LinearLayout>
-
-
-
-        <!-- Categories on budget -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            />
     </LinearLayout>
+
 
 </ScrollView>

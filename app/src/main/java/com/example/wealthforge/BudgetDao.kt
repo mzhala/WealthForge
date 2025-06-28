@@ -47,7 +47,8 @@ interface BudgetDao {
         b.year,
         b.monthIndex AS month_num,
         b.amount AS budget,
-        COALESCE(SUM(t.amount), 0) AS spent
+        COALESCE(SUM(t.amount), 0) AS spent,
+        COALESCE(cb.total_category_budget, 0) AS category_budget_total
     FROM (
         SELECT user_id, year, monthIndex, SUM(amount) AS amount
         FROM budget
@@ -63,7 +64,18 @@ interface BudgetDao {
       ON b.user_id = t.user_id
       AND b.year = t.year
       AND b.monthIndex = t.monthIndex
-    GROUP BY b.year, b.monthIndex, b.amount
+
+    LEFT JOIN (
+        SELECT user_id, year, monthIndex, SUM(amount) AS total_category_budget
+        FROM categorybudget
+        WHERE user_id = :userId
+        GROUP BY user_id, year, monthIndex
+    ) cb
+      ON b.user_id = cb.user_id
+      AND b.year = cb.year
+      AND b.monthIndex = cb.monthIndex
+
+    GROUP BY b.year, b.monthIndex, b.amount, cb.total_category_budget
     ORDER BY b.year, b.monthIndex
 """)
     fun getMonthlyTotals(
@@ -73,6 +85,7 @@ interface BudgetDao {
         endMonth: Int,
         endYear: Int
     ): List<MonthlyTotal>
+
 
 
 

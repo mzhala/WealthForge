@@ -41,4 +41,7 @@ interface CategoryDao {
     @Query("SELECT iconResId FROM categories WHERE user_id = :user_id AND category_name = :category_name")
     suspend fun getCategoryIcon(user_id: Int, category_name: String): Int
 
+    @Query("SELECT * FROM categories WHERE user_id = :userId AND recurring = 1")
+    suspend fun getRecurringCategories(userId: Int): List<Category>
+
 }

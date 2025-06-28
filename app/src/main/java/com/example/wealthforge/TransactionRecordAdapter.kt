@@ -39,7 +39,7 @@ class TransactionRecordAdapter(
         val item = items[position]
         holder.imageView.setImageResource(item.iconResId)
         holder.categoryName.text = item.name
-        holder.transactionDateAndDescription.text = item.date
+        holder.transactionDateAndDescription.text = item.subtext
         holder.transactionAmount.text = item.amount
 
         holder.deleteButton.setOnClickListener {

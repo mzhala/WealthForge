@@ -108,6 +108,8 @@ class HomeFragment : Fragment() {
         val textView = view?.findViewById<TextView>(R.id.budgetAmount) ?: return
         val textView1 = view?.findViewById<TextView>(R.id.expenseAmount) ?: return
         val textView2 = view?.findViewById<TextView>(R.id.goalAmount) ?: return
+        val textView3 = view?.findViewById<TextView>(R.id.expenseAmountBudget) ?: return
+        val textView4 = view?.findViewById<TextView>(R.id.goalAmountBudget) ?: return
 
         val calendar = Calendar.getInstance()
         val currentMonth = calendar.get(Calendar.MONTH) // 0-based
@@ -117,8 +119,11 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch {
             val amount = db.budgetDao().getBudgetAmountForUserAndMonthYear(userId, monthName, currentYear)
-            val expenseAmount = db.categoryBudgetDao().getTotalCategoryBudgetAmountByType(userId, monthName, currentYear, "Expense")
-            val goalAmount  = db.categoryBudgetDao().getTotalCategoryBudgetAmountByType(userId, monthName, currentYear, "Goal")
+            val expenseAmount = db.transactionsDao().getTransactionSumByTypeForMonthYear(userId, monthName, currentYear, "Expense")
+            val goalAmount  = db.transactionsDao().getTransactionSumByTypeForMonthYear(userId, monthName, currentYear, "Goal")
+            val expenseAmountBudget = db.categoryBudgetDao().getCategoryBudgetTotalByType(userId, monthName, currentYear, "Expense")
+            val goalAmountBudget = db.categoryBudgetDao().getCategoryBudgetTotalByType(userId, monthName, currentYear, "Goal")
+
             withContext(Dispatchers.Main) {
                 if (amount != null) {
                     val formatted =  formatAmountWithSpace(amount)
@@ -139,6 +144,20 @@ class HomeFragment : Fragment() {
                     textView2.text = formatted
                 } else {
                     textView2.text = "R0"
+                }
+
+                if (expenseAmountBudget != null) {
+                    val formatted = formatAmountWithSpace(expenseAmountBudget)
+                    textView3.text = formatted
+                } else {
+                    textView3.text = "R0"
+                }
+
+                if (goalAmountBudget != null) {
+                    val formatted = formatAmountWithSpace(goalAmountBudget)
+                    textView4.text = formatted
+                } else {
+                    textView4.text = "R0"
                 }
             }
         }
@@ -161,11 +180,12 @@ class HomeFragment : Fragment() {
                 TransactionRecordItem(
                     id = it.id,
                     name = it.categoryName,
-                    date = "${it.day} ${it.month} ${it.year} ${it.description}",
+                    date = "${it.day} ${it.month}",
                     amount = "R${"%.2f".format(it.amount)}",
                     iconResId = it.iconResId ?: R.drawable.ic_categories,
                     receiptUri = it.receipt,
-                    description = it.description
+                    description = it.description,
+                    subtext = "${it.day} ${it.month} ${it.year} ${it.description}"
                 )
             }.toMutableList()
 

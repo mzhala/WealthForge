@@ -26,6 +26,11 @@ class ResetPasswordActivity : AppCompatActivity() {
         val confirmPasswordInput = findViewById<EditText>(R.id.connfirmPassword)
         val resetPasswordButton = findViewById<Button>(R.id.forgottenPasswordButton)
 
+        findViewById<Button>(R.id.signInButton).setOnClickListener {
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+        }
+
         resetPasswordButton.setOnClickListener {
             val username = usernameInput.text.toString().trim()
             val newPassword = newPasswordInput.text.toString()

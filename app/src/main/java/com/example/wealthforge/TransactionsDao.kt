@@ -127,4 +127,21 @@ ORDER BY total DESC
     @Query("DELETE FROM transactions WHERE id = :transactionId")
     suspend fun deleteTransactionById(transactionId: Int)
 
+    @Query("""
+    SELECT COALESCE(SUM(t.amount), 0) 
+    FROM transactions t
+    INNER JOIN categories c ON t.category_name = c.category_name AND t.user_id = c.user_id
+    WHERE t.user_id = :userId
+      AND t.year = :year
+      AND t.month = :month
+      AND c.type = :type
+""")
+    suspend fun getTransactionSumByTypeForMonthYear(
+        userId: Int,
+        month: String,
+        year: Int,
+        type: String
+    ): Double
+
+
 }
